@@ -1,0 +1,140 @@
+<?php
+session_start();
+if (!isset($_SESSION['id_pengguna'])) {
+    header('Location: login.php');
+    exit;
+}
+
+require __DIR__ . '/koneksi.php';
+
+$err = '';
+$id = (string)($_GET['id'] ?? $_GET['id_konsultasi'] ?? '');
+
+if ($id === '') {
+    http_response_code(400);
+    exit('ID tidak valid.');
+}
+
+try {
+    $res = qparams('SELECT "id_konsultasi", "nama_konsultasi", "nim_konsultasi", "isi_konsultasi", "tanggal_konsultasi", "email_konsultasi", "no_wa_konsultasi", "status" FROM "konsultasi" WHERE "id_konsultasi"=$1', [$id]);
+    $row = pg_fetch_assoc($res);
+    if (!$row) {
+        http_response_code(404);
+        exit('Data tidak ditemukan.');
+    }
+} catch (Throwable $e) {
+    exit('Error: ' . htmlspecialchars($e->getMessage()));
+}
+
+$id_konsultasi      = $row['id_konsultasi'];
+$nama_konsultasi    = $row['nama_konsultasi'];
+$nim_konsultasi     = $row['nim_konsultasi'];
+$isi_konsultasi     = $row['isi_konsultasi'];
+$tanggal_konsultasi = $row['tanggal_konsultasi'];
+$email_konsultasi   = $row['email_konsultasi'];
+$no_wa_konsultasi   = $row['no_wa_konsultasi'];
+$status             = $row['status'];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id_konsultasi      = trim($_POST['id_konsultasi'] ?? '');
+    $nama_konsultasi    = trim($_POST['nama_konsultasi'] ?? '');
+    $nim_konsultasi     = trim($_POST['nim_konsultasi'] ?? '');
+    $isi_konsultasi     = trim($_POST['isi_konsultasi'] ?? '');
+    $tanggal_konsultasi = trim($_POST['tanggal_konsultasi'] ?? '');
+    $email_konsultasi   = trim($_POST['email_konsultasi'] ?? '');
+    $no_wa_konsultasi   = trim($_POST['no_wa_konsultasi'] ?? '');
+    $status             = trim($_POST['status'] ?? '');
+
+    if ($id_konsultasi === '' || $nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' || $tanggal_konsultasi === '' || $email_konsultasi === '' || $no_wa_konsultasi === '' || $status === '') {
+        $err = 'Semua field wajib diisi.';
+    } else {
+        try {
+            qparams(
+                'UPDATE "konsultasi"
+                   SET "nama_konsultasi"=$1, "nim_konsultasi"=$2, "isi_konsultasi"=$3, "tanggal_konsultasi"=$4, "email_konsultasi"=$5, "no_wa_konsultasi"=$6, "status"=$7
+                 WHERE "id_konsultasi"=$8',
+                [$nama_konsultasi, $nim_konsultasi, $isi_konsultasi, $tanggal_konsultasi, $email_konsultasi, $no_wa_konsultasi, $status, $id_konsultasi]
+            );
+            header('Location: konsultasi.php');
+            exit;
+        } catch (Throwable $e) {
+            $err = $e->getMessage();
+        }
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ubah Konsultasi</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
+</head>
+
+<body>
+    <div class="layout">
+        <?php include 'sidebar.php'; ?>
+        <div class="content">
+            <div class="flex-center">
+                <div class="card-wrapper">
+                    <div class="main-table-title" style="margin-bottom:16px;">
+                        Ubah Konsultasi
+                    </div>
+                    <form class="form-user-box" method="post" autocomplete="off">
+                        <div class="desc-form">
+                            Ubah data konsultasi di bawah sesuai kebutuhan.
+                        </div>
+                        <?php if ($err): ?>
+                            <div class="form-error"><?= htmlspecialchars($err) ?></div>
+                        <?php endif; ?>
+                        <div class="form-group">
+                            <label for="id_konsultasi" class="user-form-label">Id Konsultasi</label>
+                            <input type="text" name="id_konsultasi" id="id_konsultasi" class="user-form-input" value="<?= htmlspecialchars($id_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan Id Konsultasi" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="nama_konsultasi" class="user-form-label">Nama Konsultasi</label>
+                            <input type="text" name="nama_konsultasi" id="nama_konsultasi" class="user-form-input" value="<?= htmlspecialchars($nama_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan Nama Konsultasi">
+                        </div>
+                        <div class="form-group">
+                            <label for="nim_konsultasi" class="user-form-label">NIM Konsultasi</label>
+                            <input type="text" name="nim_konsultasi" id="nim_konsultasi" class="user-form-input" value="<?= htmlspecialchars($nim_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan NIM Konsultasi">
+                        </div>
+                        <div class="form-group">
+                            <label for="isi_konsultasi" class="user-form-label">Isi Konsultasi</label>
+                            <textarea name="isi_konsultasi" id="isi_konsultasi" class="user-form-input" required autocomplete="off" placeholder="Masukkan Isi Konsultasi"><?= htmlspecialchars($isi_konsultasi) ?></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="tanggal_konsultasi" class="user-form-label">Tanggal Konsultasi</label>
+                            <input type="date" name="tanggal_konsultasi" id="tanggal_konsultasi" class="user-form-input" value="<?= htmlspecialchars($tanggal_konsultasi) ?>" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email_konsultasi" class="user-form-label">Email Konsultasi</label>
+                            <input type="email" name="email_konsultasi" id="email_konsultasi" class="user-form-input" value="<?= htmlspecialchars($email_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="no_wa_konsultasi" class="user-form-label">No. WA Konsultasi</label>
+                            <input type="text" name="no_wa_konsultasi" id="no_wa_konsultasi" class="user-form-input" value="<?= htmlspecialchars($no_wa_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan No WA Konsultasi">
+                        </div>
+                        <div class="form-group">
+                            <label for="status" class="user-form-label">Status</label>
+                            <input type="text" name="status" id="status" class="user-form-input" value="<?= htmlspecialchars($status) ?>" required autocomplete="off" placeholder="Masukkan Status Konsultasi">
+                        </div>
+                        <div class="form-btn-bar" style="margin-top:32px;">
+                            <button class="btn-user-primary" type="submit">
+                                <span class="iconify" data-icon="mdi:content-save"></span> Simpan
+                            </button>
+                            <a class="btn-user-warning" href="konsultasi.php">
+                                <span class="iconify" data-icon="mdi:arrow-left"></span> Kembali
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

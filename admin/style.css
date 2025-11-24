@@ -1,0 +1,327 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #126FB6 0%, #0B5085 100%);
+    height: 100vh;
+    position: fixed;
+    padding: 25px 20px;
+    border-right: 1px solid rgba(0,0,0,0.15);
+    color: #fff;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #ffffff;
+}
+
+.menu {
+    list-style: none;
+}
+
+.menu li {
+    margin-bottom: 8px;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 180ms ease, color 180ms ease;
+}
+
+.menu-link.active,
+.menu li.active > .menu-link,
+.menu a.active {
+    background: #fff;
+    color: #111;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+.dropdown-menu .menu-link.active {
+    background: #fff !important;
+    color: #111 !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.iconify {
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.iconify svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.iconify svg path,
+.iconify svg circle,
+.iconify svg rect,
+.iconify svg polygon,
+.iconify svg line,
+.iconify svg polyline {
+    fill: currentColor !important;
+    stroke: currentColor !important;
+}
+
+.menu-link .label {
+    font-size: 15px;
+    line-height: 1;
+}
+
+.menu-link:hover {
+    background: rgba(255,255,255,0.06);
+}
+
+.menu li.active > .menu-link,
+.menu a.active {
+    background: #ffffff;
+    color: #111111;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.dropdown .caret {
+    margin-left: auto;
+    opacity: 0.9;
+    transition: transform 160ms ease;
+}
+
+.dropdown .dropdown-menu {
+    list-style: none;
+    padding-left: 8px;
+    margin-top: 6px;
+    display: none;
+}
+
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+.dropdown.open .caret {
+    transform: rotate(180deg);
+}
+
+.dropdown .dropdown-menu li a.menu-link {
+    padding: 8px 12px;
+    border-radius: 6px;
+    color: rgba(255,255,255,0.9);
+    background: transparent;
+}
+
+.dropdown .dropdown-menu li a.menu-link:hover,
+.dropdown .dropdown-menu li.active > a.menu-link {
+    background: rgba(255,255,255,0.08);
+}
+
+.sidebar a.logout,
+.sidebar a.logout:visited,
+.sidebar a.logout:active,
+.sidebar a.logout:focus,
+.sidebar a.logout:hover {
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.logout {
+    width: 100%;
+    margin-top: 30px;
+    padding: 12px;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
+    background: #627d98;
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+}
+
+.logout:hover {
+    background: #516b85;
+    text-decoration: none;
+}
+
+.layout {
+    display: flex;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 30px 30px 0 30px;
+}
+
+.main-table-title {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    color: #0B5085;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.styled-table thead tr {
+    background-color: #f4f4f4;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.styled-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #fafafa;
+}
+
+.btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: background 180ms;
+}
+
+.btn-primary {
+    background: #126FB6;
+    color: #fff;
+    border: none;
+    margin-bottom: 20px;
+}
+.btn-primary:hover {
+    background: #0B5085;
+}
+
+.btn-warning {
+    background: #f4b400;
+    color: #ffffff;
+    border: none;
+}
+.btn-warning:hover {
+    background: #ffe084;
+}
+
+.btn-danger {
+    background: #e03939;
+    color: #fff;
+    border: none;
+}
+.btn-danger:hover {
+    background: #c00;
+}
+
+.form-user-box { max-width: 1400px; margin: 0 auto; background: #fff; padding: 28px 24px 32px 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+
+.form-group { margin-bottom: 18px; }
+
+.user-form-label { display: block; font-weight: 600; margin-bottom: 7px; color: #0B5085; font-size: 15px; }
+
+.user-form-input {
+    display: block;
+    width: 100%;
+    padding: 10px 800px 10px 10px;
+    border: 1px solid #d5e3ef;
+    border-radius: 7px;
+    background: #f7fbfd;
+    font-size: 15px;
+    color: #222;
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.user-form-input::placeholder {
+    text-align: left;
+}
+
+.user-form-input:focus {
+    outline: none;
+    border-color: #126FB6;
+    background: #fff;
+}
+
+
+.form-btn-bar {
+    display: flex;
+    gap: 14px;
+}
+
+.btn-user-primary {
+    background: #126FB6;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+.btn-user-primary:hover {
+    background: #0B5085;
+}
+
+.btn-user-warning {
+    background: #fafafa;
+    color: #333;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    transition: background 0.18s, border 0.18s;
+}
+.btn-user-warning:hover {
+    background: #e3e9ef;
+    border: 1px solid #ccd6e5;
+}
+
+.desc-form {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+.form-error {
+    color: #e03939;
+    background: #fff0f0;
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 13px;
+    font-size: 14px;
+    border: 1px solid #f4cccc;
+}
