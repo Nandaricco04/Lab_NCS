@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_pengelola = $foto_path = $nama = $posisi = '';
+$id_pengelola = $foto_path = $nama = $posisi = $nip = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_pengelola   = trim($_POST['id_pengelola'] ?? '');
