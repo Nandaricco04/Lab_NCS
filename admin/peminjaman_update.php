@@ -154,7 +154,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="status" class="user-form-label">Status</label>
-                            <input type="text" name="status" id="status" class="user-form-input" value="<?= htmlspecialchars($status) ?>" required autocomplete="off" placeholder="Masukkan Status">
+                            <select name="status" id="status" class="user-form-input" required>
+                                <option value="Proses" <?= $status === 'Proses' ? 'selected' : '' ?>>Proses</option>
+                                <option value="Ambil" <?= $status === 'Ambil' ? 'selected' : '' ?>>Ambil</option>
+                                <option value="Selesai" <?= $status === 'Selesai' ? 'selected' : '' ?>>Selesai</option>
+                            </select>
                         </div>
                         <div class="form-btn-bar" style="margin-top:32px;">
                             <button class="btn-user-primary" type="submit">

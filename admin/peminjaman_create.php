@@ -8,7 +8,8 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_peminjaman = $id_sarana_prasarana = $nama_peminjam = $nim_peminjam = $email_peminjam = $no_wa_peminjam = $jumlah_pinjam = $tanggal_peminjaman = $tanggal_pengembalian = $status = '';
+$id_peminjaman = $id_sarana_prasarana = $nama_peminjam = $nim_peminjam = $email_peminjam = $no_wa_peminjam = $jumlah_pinjam = $tanggal_peminjaman = $tanggal_pengembalian = '';
+$status = 'Proses';
 
 $saranaOptions = [];
 $resSarana = q('SELECT "id_sarana_prasarana", "judul" FROM "sarana_prasarana" ORDER BY "id_sarana_prasarana" ASC');
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $jumlah_pinjam = trim($_POST['jumlah_pinjam'] ?? '');
     $tanggal_peminjaman = trim($_POST['tanggal_peminjaman'] ?? '');
     $tanggal_pengembalian = trim($_POST['tanggal_pengembalian'] ?? '');
-    $status = trim($_POST['status'] ?? '');
+    $status = trim($_POST['status'] ?? 'proses');
 
     if (
         $id_peminjaman === '' || $id_sarana_prasarana === '' || $nama_peminjam === '' || $nim_peminjam === '' ||
@@ -126,7 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="status" class="user-form-label">Status</label>
-                            <input type="text" name="status" id="status" class="user-form-input" value="<?= htmlspecialchars($status) ?>" required autocomplete="off" placeholder="Masukkan Status">
+                            <select name="status" id="status" class="user-form-input" required>
+                                <option value="Proses" <?= ($status === 'Proses' || $status === '') ? 'selected' : '' ?>>Proses</option>
+                                <option value="Ambil" <?= $status === 'Ambil' ? 'selected' : '' ?>>Ambil</option>
+                                <option value="Selesai" <?= $status === 'Selesai' ? 'selected' : '' ?>>Selesai</option>
+                            </select>
                         </div>
                         <div class="form-btn-bar" style="margin-top:32px;">
                             <button class="btn-user-primary" type="submit">

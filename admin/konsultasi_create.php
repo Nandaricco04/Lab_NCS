@@ -9,7 +9,8 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_konsultasi = $nama_konsultasi = $nim_konsultasi = $isi_konsultasi = $tanggal_konsultasi = $email_konsultasi = $no_wa_konsultasi = $status = '';
+$id_konsultasi = $nama_konsultasi = $nim_konsultasi = $isi_konsultasi = $tanggal_konsultasi = $email_konsultasi = $no_wa_konsultasi = '';
+$status = 'Proses';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_konsultasi      = trim($_POST['id_konsultasi'] ?? '');
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tanggal_konsultasi = trim($_POST['tanggal_konsultasi'] ?? '');
     $email_konsultasi   = trim($_POST['email_konsultasi'] ?? '');
     $no_wa_konsultasi   = trim($_POST['no_wa_konsultasi'] ?? '');
-    $status             = trim($_POST['status'] ?? '');
+    $status             = trim($_POST['status'] ?? 'proses');
 
     if ($id_konsultasi === '' || $nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' || $tanggal_konsultasi === '' || $email_konsultasi === '' || $no_wa_konsultasi === '' || $status === '') {
         $err = 'Semua field wajib diisi.';
@@ -96,9 +97,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="form-group">
                             <label for="status" class="user-form-label">Status</label>
-                            <input type="text" name="status" id="status" class="user-form-input" value="<?= htmlspecialchars($status) ?>" required autocomplete="off" placeholder="Masukkan Status Konsultasi">
+                            <select name="status" id="status" class="user-form-input" required>
+                                <option value="Proses" <?= ($status === 'Proses' ? 'selected' : '') ?>>Proses</option>
+                                <option value="Selesai" <?= ($status === 'Selesai' ? 'selected' : '') ?>>Selesai</option>
+                            </select>
                         </div>
-
                         <div class="form-btn-bar" style="margin-top:32px;">
                             <button class="btn-user-primary" type="submit">
                                 <span class="iconify" data-icon="mdi:content-save"></span> Simpan

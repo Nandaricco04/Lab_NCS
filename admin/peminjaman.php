@@ -63,7 +63,7 @@ $rows = pg_fetch_all($res) ?: [];
                             <td><?= htmlspecialchars($r['jumlah_pinjam'] ?? '') ?></td>
                             <td><?= htmlspecialchars($r['tanggal_peminjaman'] ?? '') ?></td>
                             <td><?= htmlspecialchars($r['tanggal_pengembalian'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['status'] ?? '') ?></td>
+                            <td><?= htmlspecialchars(ucfirst(strtolower($r['status'] ?? ''))) ?></td>
                             <td>
                                 <a class="btn btn-warning" href="peminjaman_update.php?id=<?= urlencode($r['id_peminjaman']) ?>">Ubah</a>
                                 <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peminjaman'] ?>').submit(); }">Hapus</a>
