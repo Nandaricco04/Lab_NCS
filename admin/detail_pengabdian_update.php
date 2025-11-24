@@ -15,7 +15,6 @@ if ($id === '') {
     exit('ID tidak valid.');
 }
 
-// Ambil data detail_pengabdian sesuai ID
 try {
     $res = qparams('SELECT "id_detail_pengabdian", "id_pengabdian", "ketua", "prodi", "judul", "skema" FROM "detail_pengabdian" WHERE "id_detail_pengabdian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
@@ -34,7 +33,6 @@ $prodi = $row['prodi'];
 $judul = $row['judul'];
 $skema = $row['skema'];
 
-// Ambil daftar pengabdian untuk dropdown
 $pengabdianOptions = [];
 $resPengabdian = q('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
 while ($rowOpt = pg_fetch_assoc($resPengabdian)) {
