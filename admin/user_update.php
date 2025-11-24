@@ -15,7 +15,6 @@ if ($id === '') {
     exit('Name tidak valid.');
 }
 
-// Query tetap sama
 try {
     $res = qparams('SELECT "id_pengguna", "username", "password_hash", "nama_lengkap" FROM "users" WHERE "id_pengguna"=$1', [$id]);
     $row = pg_fetch_assoc($res);

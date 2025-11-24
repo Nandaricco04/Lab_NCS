@@ -6,10 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll(".menu li.active").forEach(li => li.classList.remove("active"));
     }
 
-    // clicking non-dropdown links sets them active
     menuLinks.forEach(link => {
         link.addEventListener("click", (e) => {
-            // if it's a dropdown header, let dropdown handler manage open/close
             if (link.classList.contains("dropdown-toggle")) return;
 
             const li = link.closest("li");
@@ -18,13 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
             clearActive();
             li.classList.add("active");
 
-            // open parent dropdown if any
             const parentDropdown = li.closest(".dropdown");
             if (parentDropdown) {
                 parentDropdown.classList.add("open");
                 parentDropdown.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "true");
             } else {
-                // close other dropdowns
                 document.querySelectorAll(".dropdown.open").forEach(d => {
                     d.classList.remove("open");
                     d.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
@@ -33,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // dropdown toggles
     dropdownToggle.forEach(toggle => {
         toggle.addEventListener("click", () => {
             const li = toggle.closest(".dropdown");
@@ -50,7 +45,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // close dropdowns when clicking outside
     document.addEventListener("click", (e) => {
         if (!e.target.closest(".sidebar")) {
             document.querySelectorAll(".dropdown.open").forEach(d => {
