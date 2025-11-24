@@ -111,7 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="form-group">
                             <label for="kategori" class="user-form-label">Kategori</label>
-                            <input type="text" name="kategori" id="kategori" class="user-form-input" value="<?= htmlspecialchars($kategori) ?>" required autocomplete="off" placeholder="Masukkan Kategori">
+                            <select name="kategori" id="kategori" class="user-form-input" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="Agenda" <?= ($kategori === "Agenda" ? 'selected' : '') ?>>Agenda</option>
+                                <option value="Kegiatan" <?= ($kategori === "Kegiatan" ? 'selected' : '') ?>>Kegiatan</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -133,5 +137,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </body>
-
 </html>

@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $dest_path = $img_dir . $nama_file_unik;
 
         if (move_uploaded_file($tmp_name, $dest_path)) {
-            $foto = $dest_path;
+            $foto_baru = $dest_path;
         } else {
             $err = 'Gagal mengupload gambar.';
         }
@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Ubah Galeri</title>
+    <title>Ubah Galeri</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
 </head>
@@ -127,7 +127,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="form-group">
                             <label for="kategori" class="user-form-label">Kategori</label>
-                            <input type="text" name="kategori" id="kategori" class="user-form-input" value="<?= htmlspecialchars($Kategori) ?>" required autocomplete="off" placeholder="Masukkan Kategori">
+                            <select name="kategori" id="kategori" class="user-form-input" required>
+                                <option value="">-- Pilih Kategori --</option>
+                                <option value="Agenda" <?= ($Kategori === "Agenda" ? 'selected' : '') ?>>Agenda</option>
+                                <option value="Kegiatan" <?= ($Kategori === "Kegiatan" ? 'selected' : '') ?>>Kegiatan</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
@@ -154,5 +158,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </body>
-
 </html>
