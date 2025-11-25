@@ -10,7 +10,6 @@ require __DIR__ . '/koneksi.php';
 $err = '';
 $id_detail_pengabdian = $id_pengabdian = $id_pengelola = $prodi = $judul = $skema = '';
 
-// Ambil daftar pengabdian untuk select
 $pengabdianOptions = [];
 $resPengabdian = q('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
 while ($rowOpt = pg_fetch_assoc($resPengabdian)) {
