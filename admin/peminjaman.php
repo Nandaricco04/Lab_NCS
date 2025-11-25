@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
-$res = q('SELECT "id_peminjaman", "id_sarana_prasarana", "nama_peminjam", "nim_peminjam", "email_peminjam", "no_wa_peminjam", "jumlah_pinjam", "tanggal_peminjaman", "tanggal_pengembalian", "status" FROM "peminjaman" ORDER BY "id_peminjaman" ASC');
+$res = q('SELECT "id_peminjaman", "id_sarana_prasarana", "nama_peminjam", "nim_peminjam", "email_peminjam", "no_wa_peminjam", "jumlah_pinjam", "tanggal_peminjaman", "tanggal_pengembalian", "status" FROM "v_peminjaman" ORDER BY "id_peminjaman" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 
 if (!isset($_SESSION['id_pengguna'])) {
     header('Location: login.php');
@@ -76,6 +76,12 @@ if (!isset($_SESSION['id_pengguna'])) {
                         </a>
                     </li>
                 </ul>
+            </li>
+            <li class="<?= $activePage == 'peta_jalan.php' ? 'active' : '' ?>">
+                <a href="peta_jalan.php" class="menu-link">
+                    <span class="iconify" data-icon="mdi:map" data-width="20" data-height="20"></span>
+                    <span class="label">Peta Jalan</span>
+            </a>
             </li>
             <li class="<?= $activePage == 'galeri.php' ? 'active' : '' ?>">
                 <a href="galeri.php" class="menu-link">

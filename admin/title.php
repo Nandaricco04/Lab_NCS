@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
-$res = q('SELECT "id_title", "judul", "gambar_path" FROM "title_pages" ORDER BY "id_title" ASC');
+$res = q('SELECT "id_title", "judul", "gambar_path" FROM "v_title_pages" ORDER BY "id_title" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
 
