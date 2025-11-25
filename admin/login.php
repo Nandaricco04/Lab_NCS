@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<title>Login Labolatorium NCS</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="images/icons/favicon.ico" />
 	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
@@ -16,6 +17,7 @@
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
+
 <body>
 	<div class="limiter">
 		<div class="container-login100">
@@ -33,7 +35,7 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate = "Password is required">
+					<div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
 						<span class="label-input100">Password</span>
 						<input id="password" class="input100" type="password" name="password" placeholder="Enter password" required>
 						<span class="focus-input100"></span>
@@ -48,7 +50,25 @@
 			</div>
 		</div>
 	</div>
-	
+
+	<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="errorModalLabel">Login Error</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="errorModalBody">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 	<script src="vendor/animsition/js/animsition.min.js"></script>
 	<script src="vendor/bootstrap/js/popper.js"></script>
@@ -58,5 +78,14 @@
 	<script src="vendor/daterangepicker/daterangepicker.js"></script>
 	<script src="vendor/countdowntime/countdowntime.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		<?php if (isset($_GET['error'])): ?>
+			$(document).ready(function() {
+				$('#errorModalBody').text("<?php echo htmlspecialchars($_GET['error'], ENT_QUOTES); ?>");
+				$('#errorModal').modal('show');
+			});
+		<?php endif; ?>
+	</script>
 </body>
+
 </html>
