@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_detail_pengabdian", "id_pengabdian", "ketua", "prodi", "judul", "skema" FROM "detail_pengabdian" WHERE "id_detail_pengabdian"=$1', [$id]);
+    $res = qparams('SELECT "id_detail_pengabdian", "id_pengabdian", "id_pengelola", "prodi", "judul", "skema" FROM "detail_pengabdian" WHERE "id_detail_pengabdian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -27,11 +27,11 @@ try {
 }
 
 $id_detail_pengabdian = $row['id_detail_pengabdian'];
-$id_pengabdian = $row['id_pengabdian'];
-$ketua = $row['ketua'];
-$prodi = $row['prodi'];
-$judul = $row['judul'];
-$skema = $row['skema'];
+$id_pengabdian      = $row['id_pengabdian'];
+$id_pengelola       = $row['id_pengelola'];
+$prodi              = $row['prodi'];
+$judul              = $row['judul'];
+$skema              = $row['skema'];
 
 $pengabdianOptions = [];
 $resPengabdian = q('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
@@ -39,21 +39,27 @@ while ($rowOpt = pg_fetch_assoc($resPengabdian)) {
     $pengabdianOptions[] = $rowOpt;
 }
 
+$ketuaOptions = [];
+$resKetua = qparams('SELECT "id_pengelola", "nama" FROM "struktur_organisasi" WHERE "posisi" = $1', ['Kepala Lab']);
+while ($rowKetua = pg_fetch_assoc($resKetua)) {
+    $ketuaOptions[] = $rowKetua;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_detail_pengabdian = trim($_POST['id_detail_pengabdian'] ?? '');
-    $id_pengabdian = trim($_POST['id_pengabdian'] ?? '');
-    $ketua = trim($_POST['ketua'] ?? '');
-    $prodi = trim($_POST['prodi'] ?? '');
-    $judul = trim($_POST['judul'] ?? '');
-    $skema = trim($_POST['skema'] ?? '');
+    $id_pengabdian        = trim($_POST['id_pengabdian'] ?? '');
+    $id_pengelola         = trim($_POST['id_pengelola'] ?? '');
+    $prodi                = trim($_POST['prodi'] ?? '');
+    $judul                = trim($_POST['judul'] ?? '');
+    $skema                = trim($_POST['skema'] ?? '');
 
-    if ($id_detail_pengabdian === '' || $id_pengabdian === '' || $ketua === '' || $prodi === '' || $judul === '' || $skema === '') {
+    if ($id_detail_pengabdian === '' || $id_pengabdian === '' || $id_pengelola === '' || $prodi === '' || $judul === '' || $skema === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
             qparams(
-                'UPDATE "detail_pengabdian" SET "id_pengabdian"=$1, "ketua"=$2, "prodi"=$3, "judul"=$4, "skema"=$5 WHERE "id_detail_pengabdian"=$6',
-                [$id_pengabdian, $ketua, $prodi, $judul, $skema, $id_detail_pengabdian]
+                'UPDATE "detail_pengabdian" SET "id_pengabdian"=$1, "id_pengelola"=$2, "prodi"=$3, "judul"=$4, "skema"=$5 WHERE "id_detail_pengabdian"=$6',
+                [$id_pengabdian, $id_pengelola, $prodi, $judul, $skema, $id_detail_pengabdian]
             );
             header('Location: detail_pengabdian.php');
             exit;
@@ -107,8 +113,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="ketua" class="user-form-label">Ketua</label>
-                            <input type="text" name="ketua" id="ketua" class="user-form-input" value="<?= htmlspecialchars($ketua) ?>" required autocomplete="off" placeholder="Masukkan Nama Ketua">
+                            <label for="id_pengelola" class="user-form-label">Ketua</label>
+                            <select name="id_pengelola" id="id_pengelola" class="user-form-input" required>
+                                <option value="">-- Pilih Ketua (Kepala Lab) --</option>
+                                <?php foreach ($ketuaOptions as $opt): ?>
+                                    <option value="<?= htmlspecialchars($opt['id_pengelola']) ?>"
+                                        <?= $id_pengelola == $opt['id_pengelola'] ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($opt['nama']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="prodi" class="user-form-label">Prodi</label>

@@ -62,12 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             qparams(
-                'UPDATE "pengelola_lab"
-                   SET "nama"=$1, "foto_path"=$2, "posisi"=$3
-                 WHERE "id_pengelola"=$4',
-                [$Nama, $foto_path_baru, $Posisi, $id]
+                'UPDATE "struktur_organisasi"
+                   SET "nama"=$1, "foto_path"=$2, "posisi"=$3, "nip"=$4
+                 WHERE "id_pengelola"=$5',
+                [$Nama, $foto_path_baru, $Posisi, $NIP, $id]
             );
-            header('Location: pengelola_lab.php');
+            header('Location: struktur_organisasi.php');
             exit;
         } catch (Throwable $e) {
             $err = $e->getMessage();
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Ubah Struktur Organisasi</title>
+    <title>Ubah Struktur Organisasi</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
 </head>
@@ -124,8 +124,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label for="posisi  " class="user-form-label">Posisi</label>
-                            <input type="text" name="posisi" id="posisi" class="user-form-input" value="<?= htmlspecialchars($Posisi) ?>" required autocomplete="off" placeholder="Masukkan Posisi">
+                            <label for="posisi" class="user-form-label">Posisi</label>
+                            <select name="posisi" id="posisi" class="user-form-input" required>
+                                <option value="">-- Pilih Posisi --</option>
+                                <option value="Kepala Lab" <?= $Posisi === 'Kepala Lab' ? 'selected' : '' ?>>Kepala Lab</option>
+                                <option value="Peneliti" <?= $Posisi === 'Peneliti' ? 'selected' : '' ?>>Peneliti</option>
+                            </select>
                         </div>
 
                         <div class="form-group">

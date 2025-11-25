@@ -105,7 +105,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="form-group">
                             <label for="posisi" class="user-form-label">Posisi</label>
-                            <input type="text" name="posisi" id="posisi" class="user-form-input" value="<?= htmlspecialchars($posisi) ?>" required autocomplete="off" placeholder="Masukkan Posisi">
+                            <select name="posisi" id="posisi" class="user-form-input" required>
+                                <option value="">-- Pilih Posisi --</option>
+                                <option value="Kepala Lab" <?= $posisi === 'Kepala Lab' ? 'selected' : '' ?>>Kepala Lab</option>
+                                <option value="Peneliti" <?= $posisi === 'Peneliti' ? 'selected' : '' ?>>Peneliti</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
