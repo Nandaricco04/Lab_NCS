@@ -5,11 +5,10 @@ if (!isset($_SESSION['id_pengguna'])) {
     exit;
 }
 
-require __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/koneksi.php';
 
-$res = q('SELECT d."id_detail_pengabdian", d."id_pengabdian", so."nama" AS ketua, d."prodi", d."judul", d."skema"
-          FROM "detail_pengabdian" d
-          LEFT JOIN "struktur_organisasi" so ON d."id_pengelola" = so."id_pengelola"
+$res = q('SELECT d."id_detail_pengabdian", d."id_pengabdian", d."ketua", d."prodi", d."judul", d."skema"
+          FROM "v_detail_pengabdian" d
           ORDER BY d."id_detail_pengabdian" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>

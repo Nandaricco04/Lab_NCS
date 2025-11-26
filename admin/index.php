@@ -25,7 +25,7 @@ require __DIR__ . '/koneksi.php';
         <?php include 'sidebar.php'; ?>
 
         <div class="content">
-            <div class="main-table-title">Dasboard</div>
+            <div class="main-table-title">Dashboard</div>
         </div>
     </div>
 </body>
