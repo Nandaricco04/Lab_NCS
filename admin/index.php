@@ -21,45 +21,48 @@ require __DIR__ . '/koneksi.php';
 
 <body>
 
-<div class="layout">
-    <?php include 'sidebar.php'; ?>
+    <div class="layout">
+        <?php include 'sidebar.php'; ?>
 
-    <div class="content">
-    <div class="main-table-title">Dashboard</div>
+        <div class="content">
+            <div class="main-table-title">Dashboard</div>
 
-    <div class="dashboard-cards">
+            <div class="dashboard-cards">
 
-       <div class="dashboard-card">
-        <div class="card-title">Total User</div>
-        <div class="card-value"><?= jumlahUsers(); ?></div>
-        <span class="card-icon">
-            <iconify-icon icon="mdi:account-group"></iconify-icon>
-        </span>
+                <div class="dashboard-card">
+                    <div class="card-title">Total User</div>
+                    <div class="card-value"><?= jumlahUsers(); ?></div>
+                    <span class="card-icon">
+                        <iconify-icon icon="mdi:account-group"></iconify-icon>
+                    </span>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-title">Total Pengabdian</div>
+                    <div class="card-value"><?= jumlahPengabdian(); ?></div>
+                    <span class="card-icon">
+                        <iconify-icon icon="mdi:hand-heart"></iconify-icon>
+                    </span>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-title">Total Agenda Kegiatan</div>
+                    <div class="card-value"><?= jumlahGaleri(); ?></div>
+                    <span class="card-icon">
+                        <iconify-icon icon="mdi:calendar-check"></iconify-icon>
+                    </span>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-title">Total Peminjaman</div>
+                    <div class="card-value"><?= jumlahPeminjaman(); ?></div>
+                    <span class="card-icon">
+                        <iconify-icon icon="mdi:book-open-page-variant"></iconify-icon>
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="dashboard-card">
-        <div class="card-title">Total Pengabdian</div>
-        <div class="card-value"><?= jumlahPengabdian(); ?></div>
-        <span class="card-icon">
-            <iconify-icon icon="mdi:hand-heart"></iconify-icon>
-        </span>
-    </div>
-
-    <div class="dashboard-card">
-        <div class="card-title">Total Agenda Kegiatan</div>
-        <div class="card-value"><?= jumlahGaleri(); ?></div>
-        <span class="card-icon">
-            <iconify-icon icon="mdi:calendar-check"></iconify-icon>
-        </span>
-    </div>
-
-    <div class="dashboard-card">
-        <div class="card-title">Total Peminjaman</div>
-        <div class="card-value"><?= jumlahPeminjaman(); ?></div>
-        <span class="card-icon">
-            <iconify-icon icon="mdi:book-open-page-variant"></iconify-icon>
-        </span>
-    </div>
-</div>
 </body>
+
 </html>

@@ -6,7 +6,7 @@ function get_pg_connection(): PgSql\Connection {
         return $conn;
     }
 
-    $connStr = "host=localhost port=5432 dbname=Ncs user=postgres password=bakmi1 options='--client_encoding=UTF8'";
+    $connStr = "host=localhost port=5432 dbname=Ncs user=postgres password=nandaricco options='--client_encoding=UTF8'";
     $conn = @pg_connect($connStr);
 
     if (!$conn) {
