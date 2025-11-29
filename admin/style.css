@@ -239,7 +239,7 @@
     background: #c00;
 }
 
-.form-user-box { width: 1000px; margin: 0 auto; background: #fff; padding: 28px 24px 32px 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+.form-user-box { width: 1000px; margin-left: 0; background: #fff; padding: 28px 24px 32px 24px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
 
 .form-group { margin-bottom: 18px; }
 
