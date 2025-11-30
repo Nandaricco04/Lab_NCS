@@ -9,14 +9,14 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_penelitian = $judul = $deskripsi = $file_path = '';
+$id_penelitian = $judul = $tahun = $file_path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_penelitian = trim($_POST['id_penelitian'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
+    $tahun = trim($_POST['tahun'] ?? '');
 
-    if ($id_penelitian === '' || $judul === '' || $deskripsi === '' || empty($_FILES['file_path']['name'])) {
+    if ($id_penelitian === '' || $judul === '' || $tahun === '' || empty($_FILES['file_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/files/';
@@ -41,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "penelitian" ("id_penelitian", "judul", "deskripsi", "file_path") VALUES ($1, $2, $3, $4)',
-                        [$id_penelitian, $judul, $deskripsi, $file_path]
+                        'INSERT INTO "penelitian" ("id_penelitian", "judul", "tahun", "file_path") VALUES ($1, $2, $3, $4)',
+                        [$id_penelitian, $judul, $tahun, $file_path]
                     );
                     header('Location: penelitian.php');
                     exit;
@@ -98,8 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi" class="user-form-label">Deskripsi</label>
-                            <input type="text" name="deskripsi" id="deskripsi" class="user-form-input" value="<?= htmlspecialchars($deskripsi) ?>" required autocomplete="off" placeholder="Masukkan Deskripsi">
+                            <label for="tahun" class="user-form-label">Tahun</label>
+                            <input type="date" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" placeholder="Masukkan tahun">
                         </div>
 
                         <div class="form-group">

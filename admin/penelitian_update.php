@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_penelitian", "judul", "deskripsi", "file_path" FROM "penelitian" WHERE "id_penelitian"=$1', [$id]);
+    $res = qparams('SELECT "id_penelitian", "judul", "tahun", "file_path" FROM "penelitian" WHERE "id_penelitian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -28,16 +28,15 @@ try {
 
 $id_penelitian = $row['id_penelitian'];
 $judul = $row['judul'];
-$deskripsi = $row['deskripsi'];
+$tahun = $row['tahun'];
 $file_path = $row['file_path'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_penelitian = trim($_POST['id_penelitian'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
-    $deskripsi = trim($_POST['deskripsi'] ?? '');
+    $tahun = trim($_POST['tahun'] ?? '');
     $file_path_baru = $file_path;
 
-    // Jika ada file baru di-upload
     if (isset($_FILES['file_path']) && $_FILES['file_path']['error'] == UPLOAD_ERR_OK) {
         $allowed_ext = ['pdf'];
         $upload_dir = __DIR__ . '/files/';
@@ -64,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($id_penelitian === '' || $judul === '' || $deskripsi === '') {
+    if ($id_penelitian === '' || $judul === '' || $tahun === '') {
         $err = 'Semua field wajib diisi.';
     }
     
@@ -72,9 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             qparams(
                 'UPDATE "penelitian"
-                   SET "judul"=$1, "deskripsi"=$2, "file_path"=$3
+                   SET "judul"=$1, "tahun"=$2, "file_path"=$3
                  WHERE "id_penelitian"=$4',
-                [$judul, $deskripsi, $file_path_baru, $id_penelitian]
+                [$judul, $tahun, $file_path_baru, $id_penelitian]
             );
             header('Location: penelitian.php');
             exit;
@@ -122,8 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label for="deskripsi" class="user-form-label">Deskripsi</label>
-                            <input type="text" name="deskripsi" id="deskripsi" class="user-form-input" value="<?= htmlspecialchars($deskripsi) ?>" required autocomplete="off" placeholder="Masukkan Deskripsi">
+                            <label for="tahun" class="user-form-label">tahun</label>
+                            <input type="date" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" placeholder="Masukkan tahun">
                         </div>
 
                         <div class="form-group">

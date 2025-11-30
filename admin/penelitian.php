@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
-$res = q('SELECT "id_penelitian", "judul", "deskripsi", "file_path" FROM "v_penelitian" ORDER BY "id_penelitian" ASC');
+$res = q('SELECT "id_penelitian", "judul", "tahun", "file_path" FROM "v_penelitian" ORDER BY "id_penelitian" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
 
@@ -36,7 +36,7 @@ $rows = pg_fetch_all($res) ?: [];
                     <tr>
                         <th>ID</th>
                         <th>Judul</th>
-                        <th>Deskripsi</th>
+                        <th>Tahun</th>
                         <th>File</th>
                         <th>Aksi</th>
                     </tr>
@@ -50,7 +50,7 @@ $rows = pg_fetch_all($res) ?: [];
                             <tr>
                                 <td><?= htmlspecialchars($r['id_penelitian'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($r['deskripsi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['tahun'] ?? '') ?></td>
                                 <td>
                                     <?php if (!empty($r['file_path'])): ?>
                                         <?php $filename = basename($r['file_path']); ?>
