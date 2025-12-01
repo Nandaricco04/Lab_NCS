@@ -6,6 +6,9 @@ if (!isset($_SESSION['id_pengguna'])) {
 }
 
 require __DIR__ . '/koneksi.php';
+
+$res = q("SELECT * FROM v_dashboard");
+$dash = pg_fetch_assoc($res);
 ?>
 
 <!DOCTYPE html>
@@ -29,38 +32,36 @@ require __DIR__ . '/koneksi.php';
 
             <div class="dashboard-cards">
 
-                <div class="dashboard-card">
-                    <div class="card-title">Total User</div>
-                    <div class="card-value"><?= jumlahUsers(); ?></div>
-                    <span class="card-icon">
-                        <iconify-icon icon="mdi:account-group"></iconify-icon>
-                    </span>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-title">Total Pengabdian</div>
-                    <div class="card-value"><?= jumlahPengabdian(); ?></div>
-                    <span class="card-icon">
-                        <iconify-icon icon="mdi:hand-heart"></iconify-icon>
-                    </span>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-title">Total Agenda Kegiatan</div>
-                    <div class="card-value"><?= jumlahGaleri(); ?></div>
-                    <span class="card-icon">
-                        <iconify-icon icon="mdi:calendar-check"></iconify-icon>
-                    </span>
-                </div>
-
-                <div class="dashboard-card">
-                    <div class="card-title">Total Peminjaman</div>
-                    <div class="card-value"><?= jumlahPeminjaman(); ?></div>
-                    <span class="card-icon">
-                        <iconify-icon icon="mdi:book-open-page-variant"></iconify-icon>
-                    </span>
-                </div>
+            <div class="dashboard-card">
+                <div class="card-title">Total User</div>
+                <div class="card-value"><?= $dash['total_user'] ?></div>
             </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">Total Dosen</div>
+                <div class="card-value"><?= $dash['total_dosen'] ?></div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">Total Pengabdian</div>
+                <div class="card-value"><?= $dash['total_pengabdian'] ?></div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">Total Penelitian</div>
+                <div class="card-value"><?= $dash['total_penelitian'] ?></div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">Total Galeri</div>
+                <div class="card-value"><?= $dash['total_galeri'] ?></div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-title">Total Peminjaman</div>
+                <div class="card-value"><?= $dash['total_peminjaman'] ?></div>
+            </div>
+            
         </div>
     </div>
 </body>

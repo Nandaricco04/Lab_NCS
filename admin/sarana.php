@@ -7,7 +7,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
-$res = q('SELECT "id_sarana_prasarana", "gambar_path", "judul", "sub_judul", "jumlah_alat" FROM "v_sarana_prasarana" ORDER BY "id_sarana_prasarana" ASC');
+$res = q('SELECT * FROM v_sarana_prasarana ORDER BY id_sarana_prasarana ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
 
@@ -59,7 +59,8 @@ $rows = pg_fetch_all($res) ?: [];
                         </td>
                         <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['sub_judul'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['jumlah_alat'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($r['jumlah_alat']) ?></td>
+
                         <td>
                             <a class="btn btn-warning" href="sarana_update.php?id=<?= urlencode($r['id_sarana_prasarana']) ?>">Ubah</a>
                             <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_sarana_prasarana'] ?>').submit(); }">Hapus</a>
