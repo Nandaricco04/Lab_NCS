@@ -9,19 +9,18 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_Misi = $Isi_Misi = '';
+$Isi_Misi = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Misi   = trim($_POST['id_misi'] ?? '');
     $Isi_Misi  = trim($_POST['isi_misi'] ?? '');
 
-    if ($Id_Misi === '' || $Isi_Misi === '') {
+    if ($Isi_Misi === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
             qparams(
-                'INSERT INTO "misi" ("id_misi", "isi_misi") VALUES ($1, $2)',
-                [$Id_Misi, $Isi_Misi]
+                'INSERT INTO "misi" ("isi_misi") VALUES ($1)',
+                [$Isi_Misi]
             );
             header('Location: misi.php');
             exit;
@@ -61,12 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_misi" class="user-form-label">Id Misi</label>
-                            <input type="text" name="id_misi" id="id_misi" class="user-form-input" value="<?= htmlspecialchars($Id_Misi) ?>" required autocomplete="off" placeholder="Masukkan Id Misi">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="isi_misi" class="user-form-label">Isi</label>
+                            <label for="isi_misi" class="user-form-label">Isi<span style="color:red">*</span></label>
                             <textarea name="isi_misi" id="isi_misi" class="user-form-input" rows="8" required autocomplete="off" placeholder="Masukkan isi"><?= htmlspecialchars($Isi_Misi) ?></textarea>
                         </div>
 

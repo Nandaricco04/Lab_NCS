@@ -9,15 +9,14 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_pengelola = $foto_path = $nama = $posisi = $nip = '';
+$foto_path = $nama = $posisi = $nip = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_pengelola   = trim($_POST['id_pengelola'] ?? '');
     $nama           = trim($_POST['nama'] ?? '');
     $posisi         = trim($_POST['posisi'] ?? '');
     $nip            = trim($_POST['nip'] ?? '');
 
-    if ($id_pengelola === '' || $nama === '' || $posisi === '' || $nip === '' || empty($_FILES['foto_path']['name'])) {
+    if ($nama === '' || $posisi === '' || $nip === '' || empty($_FILES['foto_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/images/';
@@ -42,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "struktur_organisasi" ("id_pengelola", "foto_path", "nama", "posisi", "nip") VALUES ($1, $2, $3, $4, $5)',
-                        [$id_pengelola, $foto_path, $nama, $posisi, $nip]
+                        'INSERT INTO "struktur_organisasi" ("foto_path", "nama", "posisi", "nip") VALUES ($1, $2, $3, $4)',
+                        [$foto_path, $nama, $posisi, $nip]
                     );
                     header('Location: struktur_organisasi.php');
                     exit;
@@ -89,22 +88,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_pengelola" class="user-form-label">Id Pengelola</label>
-                            <input type="text" name="id_pengelola" id="id_pengelola" class="user-form-input" value="<?= htmlspecialchars($id_pengelola) ?>" required autocomplete="off" placeholder="Masukkan Id Pengelola">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="foto_path" class="user-form-label">Foto</label>
+                            <label for="foto_path" class="user-form-label">Foto<span style="color:red">*</span></label>
                             <input type="file" name="foto_path" id="foto_path" class="user-form-input" required accept=".jpg,.jpeg,.png,.gif,.bmp">
                         </div>
 
                         <div class="form-group">
-                            <label for="nama" class="user-form-label">Nama</label>
+                            <label for="nama" class="user-form-label">Nama<span style="color:red">*</span></label>
                             <input type="text" name="nama" id="nama" class="user-form-input" value="<?= htmlspecialchars($nama) ?>" required autocomplete="off" placeholder="Masukkan Nama">
                         </div>
 
                         <div class="form-group">
-                            <label for="posisi" class="user-form-label">Posisi</label>
+                            <label for="posisi" class="user-form-label">Posisi<span style="color:red">*</span></label>
                             <select name="posisi" id="posisi" class="user-form-input" required>
                                 <option value="">-- Pilih Posisi --</option>
                                 <option value="Kepala Lab" <?= $posisi === 'Kepala Lab' ? 'selected' : '' ?>>Kepala Lab</option>
@@ -113,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
 
                         <div class="form-group">
-                            <label for="nip" class="user-form-label">NIP</label>
+                            <label for="nip" class="user-form-label">NIP<span style="color:red">*</span></label>
                             <input type="text" name="nip" id="nip" class="user-form-input" value="<?= htmlspecialchars($nip) ?>" required autocomplete="off" placeholder="Masukkan NIP">
                         </div>
 

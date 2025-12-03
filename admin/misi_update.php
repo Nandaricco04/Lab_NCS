@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_misi", "isi_misi" FROM "misi" WHERE "id_misi"=$1', [$id]);
+    $res = qparams('SELECT "isi_misi" FROM "misi" WHERE "id_misi"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,14 +26,12 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Misi = $row['id_misi'];
 $Isi_Misi = $row['isi_misi'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Misi   = trim($_POST['id_misi'] ?? '');
     $Isi_Misi      = trim($_POST['isi_misi'] ?? '');
 
-    if ($Id_Misi === '' || $Isi_Misi === '') {
+    if ($Isi_Misi === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -79,11 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-
-                        <div class="form-group">
-                            <label for="id_misi" class="user-form-label">Id Misi</label>
-                            <input type="text" name="id_misi" id="id_misi" class="user-form-input" value="<?= htmlspecialchars($Id_Misi) ?>" required autocomplete="off" placeholder="Masukkan Id Misi">
-                        </div>
 
                         <div class="form-group">
                             <label for="isi_misi" class="user-form-label">Isi Misi</label>
