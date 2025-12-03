@@ -2,7 +2,7 @@
 require_once 'admin/koneksi.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $alat      = $_POST['alat']; // ini harus berisi id_sarana_prasarana
+    $alat      = $_POST['id_sarana_prasarana'];
     $nama      = $_POST['nama_peminjam'];
     $nim       = $_POST['nim_peminjam'];
     $email     = $_POST['email_peminjam'];
@@ -13,16 +13,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         $sql = "CALL sp_insert_peminjaman($1,$2,$3,$4,$5,$6,$7,$8,$9)";
-        qparams($sql, [$alat, $nama, $nim, $email, $wa, $jumlah, $tgl_pinjam, $tgl_kembali, 'proses']);
+        qparams($sql, [$alat, $nama, $nim, $email, $wa, $jumlah, $tgl_pinjam, $tgl_kembali, 'Proses']);
 
-        echo "<script>alert('Peminjaman berhasil dikirim!'); window.location='peminjaman.php';</script>";
+        echo "<script>alert('Peminjaman berhasil dikirim!'); window.location='sarana.php';</script>";
 
     } catch (Exception $e) {
         echo "<script>alert('Gagal mengirim peminjaman!');</script>";
         error_log($e->getMessage());
     }
 }
-
 
 // Ambil data title/hero
 try {

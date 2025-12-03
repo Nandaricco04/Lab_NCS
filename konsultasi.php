@@ -13,9 +13,9 @@ require_once 'admin/koneksi.php';
     try {
         // Call Stored Procedure
         $sql = "CALL sp_insert_konsultasi($1,$2,$3,$4,$5,$6,$7)";
-        qparams($sql, [$nama, $nim, $isi, $tgl, $email, $wa, 'proses']);
+        qparams($sql, [$nama, $nim, $isi, $tgl, $email, $wa, 'Proses']);
 
-        echo "<script>alert('Konsultasi berhasil dikirim!'); window.location='konsultasi.php';</script>";
+        echo "<script>alert('Konsultasi berhasil dikirim!'); window.location='sarana.php';</script>";
     } catch (Exception $e) {
         echo "<script>alert('Gagal mengirim konsultasi!');</script>";
         error_log($e->getMessage());
