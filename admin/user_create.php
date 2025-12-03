@@ -9,21 +9,20 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_Pengguna = $Username = $Password_Hash = $Nama_Lengkap = '';
+$Username = $Password_Hash = $Nama_Lengkap = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Pengguna   = trim($_POST['id_pengguna'] ?? '');
     $Username      = trim($_POST['username'] ?? '');
     $Password_Hash = password_hash(trim($_POST['password_hash'] ?? ''), PASSWORD_DEFAULT);
     $Nama_Lengkap  = trim($_POST['nama_lengkap'] ?? '');
 
-    if ($Id_Pengguna === '' || $Username === '' || $Password_Hash === '' || $Nama_Lengkap === '') {
+    if ($Username === '' || $Password_Hash === '' || $Nama_Lengkap === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
             qparams(
-                'INSERT INTO "users" ("id_pengguna", "username", "password_hash", "nama_lengkap") VALUES ($1, $2, $3, $4)',
-                [$Id_Pengguna, $Username, $Password_Hash, $Nama_Lengkap]
+                'INSERT INTO "users" ("username", "password_hash", "nama_lengkap") VALUES ($1, $2, $3)',
+                [$Username, $Password_Hash, $Nama_Lengkap]
             );
             header('Location: user.php');
             exit;
@@ -63,22 +62,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_pengguna" class="user-form-label">Id Pengguna</label>
-                            <input type="text" name="id_pengguna" id="id_pengguna" class="user-form-input" value="<?= htmlspecialchars($Id_Pengguna) ?>" required autocomplete="off" placeholder="Masukkan Id Pengguna">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="username" class="user-form-label">Username</label>
+                            <label for="username" class="user-form-label">Username<span style="color:red">*</span></label>
                             <input type="text" name="username" id="username" class="user-form-input" value="<?= htmlspecialchars($Username) ?>" required autocomplete="off" placeholder="Masukkan username">
                         </div>
 
                         <div class="form-group">
-                            <label for="password_hash" class="user-form-label">Password</label>
+                            <label for="password_hash" class="user-form-label">Password<span style="color:red">*</span></label>
                             <input type="password" name="password_hash" id="password_hash" class="user-form-input" value="<?= htmlspecialchars($Password_Hash) ?>" required autocomplete="off" placeholder="Masukkan password">
                         </div>
 
                         <div class="form-group">
-                            <label for="nama_lengkap" class="user-form-label">Nama Lengkap</label>
+                            <label for="nama_lengkap" class="user-form-label">Nama Lengkap<span style="color:red">*</span></label>
                             <input type="text" name="nama_lengkap" id="nama_lengkap" class="user-form-input" value="<?= htmlspecialchars($Nama_Lengkap) ?>" required autocomplete="off" placeholder="Masukkan nama lengkap">
                         </div>
 

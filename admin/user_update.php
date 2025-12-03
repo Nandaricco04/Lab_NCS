@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_pengguna", "username", "password_hash", "nama_lengkap" FROM "users" WHERE "id_pengguna"=$1', [$id]);
+    $res = qparams('SELECT "username", "password_hash", "nama_lengkap" FROM "users" WHERE "id_pengguna"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,26 +26,24 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Pengguna = $row['id_pengguna'];
 $Username = $row['username'];
 $Password_Hash = $row['password_hash'];
 $Nama_Lengkap = $row['nama_lengkap'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Pengguna   = trim($_POST['id_pengguna'] ?? '');
     $Username      = trim($_POST['username'] ?? '');
     $Password_Hash = password_hash(trim($_POST['password_hash'] ?? ''), PASSWORD_DEFAULT);
     $Nama_Lengkap = trim($_POST['nama_lengkap'] ?? '');
 
-    if ($Id_Pengguna === '' || $Username === '' || $Password_Hash === '' || $Nama_Lengkap === '') {
+    if ($Username === '' || $Password_Hash === '' || $Nama_Lengkap === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
             qparams(
                 'UPDATE "users"
-                   SET "id_pengguna"=$1, "username"=$2, "password_hash"=$3, "nama_lengkap"=$4
-                 WHERE "id_pengguna"=$5',
-                [$Id_Pengguna, $Username, $Password_Hash, $Nama_Lengkap, $id]
+                   SET "username"=$1, "password_hash"=$2, "nama_lengkap"=$3
+                 WHERE "id_pengguna"=$4',
+                [$Username, $Password_Hash, $Nama_Lengkap, $id]
             );
             header('Location: user.php');
             exit;
@@ -83,11 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-
-                        <div class="form-group">
-                            <label for="id_pengguna" class="user-form-label">Id Pengguna</label>
-                            <input type="text" name="id_pengguna" id="id_pengguna" class="user-form-input" value="<?= htmlspecialchars($Id_Pengguna) ?>" required autocomplete="off" placeholder="Masukkan Id Pengguna">
-                        </div>
 
                         <div class="form-group">
                             <label for="username" class="user-form-label">Username</label>
