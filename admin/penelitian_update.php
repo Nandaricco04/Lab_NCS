@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_penelitian", "judul", "tahun", "file_path" FROM "penelitian" WHERE "id_penelitian"=$1', [$id]);
+    $res = qparams('SELECT "judul", "tahun", "file_path" FROM "penelitian" WHERE "id_penelitian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,13 +26,11 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$id_penelitian = $row['id_penelitian'];
 $judul = $row['judul'];
 $tahun = $row['tahun'];
 $file_path = $row['file_path'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_penelitian = trim($_POST['id_penelitian'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
     $file_path_baru = $file_path;
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($id_penelitian === '' || $judul === '' || $tahun === '') {
+    if ($judul === '' || $tahun === '') {
         $err = 'Semua field wajib diisi.';
     }
     
@@ -110,10 +108,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_penelitian" class="user-form-label">Id Penelitian</label>
-                            <input type="text" name="id_penelitian" id="id_penelitian" class="user-form-input" value="<?= htmlspecialchars($id_penelitian) ?>" required autocomplete="off" placeholder="Masukkan Id Penelitian" readonly>
-                        </div>
 
                         <div class="form-group">
                             <label for="judul" class="user-form-label">Judul</label>

@@ -9,15 +9,14 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_sarana_prasarana = $gambar_path = $judul = $sub_judul = $jumlah_alat = '';
+$gambar_path = $judul = $sub_judul = $jumlah_alat = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_sarana_prasarana = trim($_POST['id_sarana_prasarana'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
     $sub_judul = trim($_POST['sub_judul'] ?? '');
     $jumlah_alat = trim($_POST['jumlah_alat'] ?? '');
 
-    if ($Id_sarana_prasarana === '' || $judul === '' || $sub_judul === '' || $jumlah_alat === '' || empty($_FILES['gambar_path']['name'])) {
+    if ($judul === '' || $sub_judul === '' || $jumlah_alat === '' || empty($_FILES['gambar_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/images/';
@@ -42,8 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "sarana_prasarana" ("id_sarana_prasarana", "gambar_path", "judul", "sub_judul", "jumlah_alat") VALUES ($1, $2, $3, $4, $5)',
-                        [$Id_sarana_prasarana, $foto_path, $judul, $sub_judul, $jumlah_alat]
+                        'INSERT INTO "sarana_prasarana" ("gambar_path", "judul", "sub_judul", "jumlah_alat") VALUES ($1, $2, $3, $4)',
+                        [$foto_path, $judul, $sub_judul, $jumlah_alat]
                     );
                     header('Location: sarana.php');
                     exit;
@@ -89,27 +88,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_sarana_prasarana" class="user-form-label">Id Sarana Prasarana</label>
-                            <input type="text" name="id_sarana_prasarana" id="id_sarana_prasarana" class="user-form-input" value="<?= htmlspecialchars($Id_sarana_prasarana) ?>" required autocomplete="off" placeholder="Masukkan Id Sarana Prasarana">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gambar_path" class="user-form-label">Gambar</label>
+                            <label for="gambar_path" class="user-form-label">Gambar<span style="color:red">*</span></label>
                             <input type="file" name="gambar_path" id="gambar_path" class="user-form-input" required accept=".jpg,.jpeg,.png,.gif,.bmp">
                         </div>
 
                         <div class="form-group">
-                            <label for="judul" class="user-form-label">Judul</label>
+                            <label for="judul" class="user-form-label">Judul<span style="color:red">*</span></label>
                             <input type="text" name="judul" id="judul" class="user-form-input" value="<?= htmlspecialchars($judul) ?>" required autocomplete="off" placeholder="Masukkan Judul">
                         </div>
 
                         <div class="form-group">
-                            <label for="sub_judul" class="user-form-label">Sub Judul</label>
+                            <label for="sub_judul" class="user-form-label">Sub Judul<span style="color:red">*</span></label>
                             <input type="text" name="sub_judul" id="sub_judul" class="user-form-input" value="<?= htmlspecialchars($sub_judul) ?>" required autocomplete="off" placeholder="Masukkan Sub Judul">
                         </div>
 
                         <div class="form-group">
-                            <label for="jumlah_alat" class="user-form-label">Jumlah Alat</label>
+                            <label for="jumlah_alat" class="user-form-label">Jumlah Alat<span style="color:red">*</span></label>
                             <input type="text" name="jumlah_alat" id="jumlah_alat" class="user-form-input" value="<?= htmlspecialchars($jumlah_alat) ?>" required autocomplete="off" placeholder="Masukkan Jumlah Alat">
                         </div>
 

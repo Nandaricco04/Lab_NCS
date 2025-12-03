@@ -9,13 +9,12 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_title = $Judul = $Gambar_Path = '';
+$Judul = $Gambar_Path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_title   = trim($_POST['id_title'] ?? '');
     $Judul      = trim($_POST['judul'] ?? '');
 
-    if ($Id_title === '' || $Judul === '' || empty($_FILES['gambar_path']['name'])) {
+    if ($Judul === '' || empty($_FILES['gambar_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/images/';
@@ -39,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "title_pages" ("id_title", "judul", "gambar_path") VALUES ($1, $2, $3)',
-                        [$Id_title, $Judul, $Gambar_Path]
+                        'INSERT INTO "title_pages" ("judul", "gambar_path") VALUES ($1, $2)',
+                        [$Judul, $Gambar_Path]
                     );
                     header('Location: title.php');
                     exit;
@@ -86,17 +85,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_title" class="user-form-label">Id Title</label>
-                            <input type="text" name="id_title" id="id_title" class="user-form-input" value="<?= htmlspecialchars($Id_title) ?>" required autocomplete="off" placeholder="Masukkan Id Title">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="judul" class="user-form-label">Judul</label>
+                            <label for="judul" class="user-form-label">Judul<span style="color:red">*</span></label>
                             <input type="text" name="judul" id="judul" class="user-form-input" value="<?= htmlspecialchars($Judul) ?>" required autocomplete="off" placeholder="Masukkan Judul">
                         </div>
 
                         <div class="form-group">
-                            <label for="gambar_path" class="user-form-label">Gambar</label>
+                            <label for="gambar_path" class="user-form-label">Gambar<span style="color:red">*</span></label>
                             <input type="file" name="gambar_path" id="gambar_path" class="user-form-input" required accept=".jpg,.jpeg,.png,.gif,.bmp">
                         </div>
 

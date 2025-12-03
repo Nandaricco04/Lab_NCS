@@ -8,14 +8,13 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_pengabdian = $tahun = $judul = '';
+$tahun = $judul = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_pengabdian = trim($_POST['id_pengabdian'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
 
-    if ($id_pengabdian === '' || $tahun === '' || $judul === '') {
+    if ($tahun === '' || $judul === '') {
         $err = 'Semua field wajib diisi.';
     } elseif (!preg_match('/^[0-9]{4}$/', $tahun)) {
         $err = 'Tahun harus berupa 4 digit angka.';
@@ -60,15 +59,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
                         <div class="form-group">
-                            <label for="id_pengabdian" class="user-form-label">Id Pengabdian</label>
-                            <input type="text" name="id_pengabdian" id="id_pengabdian" class="user-form-input" value="<?= htmlspecialchars($id_pengabdian) ?>" required autocomplete="off" placeholder="Masukkan Id Pengabdian">
-                        </div>
-                        <div class="form-group">
-                            <label for="tahun" class="user-form-label">Tahun</label>
+                            <label for="tahun" class="user-form-label">Tahun<span style="color:red">*</span></label>
                             <input type="text" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" maxlength="4" pattern="[0-9]{4}" placeholder="Contoh: 2024">
                         </div>
                         <div class="form-group">
-                            <label for="judul" class="user-form-label">Judul</label>
+                            <label for="judul" class="user-form-label">Judul<span style="color:red">*</span></label>
                             <input type="text" name="judul" id="judul" class="user-form-input" value="<?= htmlspecialchars($judul) ?>" required autocomplete="off" placeholder="Masukkan Judul Pengabdian">
                         </div>
                         <div class="form-btn-bar" style="margin-top:32px;">

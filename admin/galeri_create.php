@@ -9,16 +9,15 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_agenda_kegiatan = $keterangan = $tanggal_mulai = $tanggal_selesai = $kategori = $foto = '';
+$keterangan = $tanggal_mulai = $tanggal_selesai = $kategori = $foto = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_agenda_kegiatan   = trim($_POST['id_agenda_kegiatan'] ?? '');
     $keterangan           = trim($_POST['keterangan'] ?? '');
     $tanggal_mulai        = trim($_POST['tanggal_mulai'] ?? '');
     $tanggal_selesai      = trim($_POST['tanggal_selesai'] ?? '');
     $kategori             = trim($_POST['kategori'] ?? '');
 
-    if ($id_agenda_kegiatan === '' || $keterangan === '' || $tanggal_mulai === '' || $kategori === '' || empty($_FILES['foto']['name'])) {
+    if ($keterangan === '' || $tanggal_mulai === '' || $kategori === '' || empty($_FILES['foto']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/images/';
@@ -43,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "agenda_kegiatan" ("id_agenda_kegiatan", "keterangan", "tanggal_mulai", "tanggal_selesai", "kategori", "foto") VALUES ($1, $2, $3, $4, $5, $6)',
-                        [$id_agenda_kegiatan, $keterangan, $tanggal_mulai, $tanggal_selesai, $kategori, $foto]
+                        'INSERT INTO "agenda_kegiatan" ("keterangan", "tanggal_mulai", "tanggal_selesai", "kategori", "foto") VALUES ($1, $2, $3, $4, $5)',
+                        [$keterangan, $tanggal_mulai, $tanggal_selesai, $kategori, $foto]
                     );
                     header('Location: galeri.php');
                     exit;
@@ -90,27 +89,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_agenda_kegiatan" class="user-form-label">Id Agenda Kegiatan</label>
-                            <input type="text" name="id_agenda_kegiatan" id="id_agenda_kegiatan" class="user-form-input" value="<?= htmlspecialchars($id_agenda_kegiatan) ?>" required autocomplete="off" placeholder="Masukkan Id Agenda Kegiatan">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="keterangan" class="user-form-label">Keterangan</label>
+                            <label for="keterangan" class="user-form-label">Keterangan<span style="color:red">*</span></label>
                             <input type="text" name="keterangan" id="keterangan" class="user-form-input" value="<?= htmlspecialchars($keterangan) ?>" required autocomplete="off" placeholder="Masukkan Keterangan">
                         </div>
 
                         <div class="form-group">
-                            <label for="tanggal_mulai" class="user-form-label">Tanggal Mulai</label>
+                            <label for="tanggal_mulai" class="user-form-label">Tanggal Mulai<span style="color:red">*</span></label>
                             <input type="date" name="tanggal_mulai" id="tanggal_mulai" class="user-form-input" value="<?= htmlspecialchars($tanggal_mulai) ?>" required autocomplete="off" placeholder="Masukkan Tanggal Mulai">
                         </div>
 
                         <div class="form-group">
-                            <label for="tanggal_selesai" class="user-form-label">Tanggal Selesai</label>
+                            <label for="tanggal_selesai" class="user-form-label">Tanggal Selesai<span style="color:red">*</span></label>
                             <input type="date" name="tanggal_selesai" id="tanggal_selesai" class="user-form-input" value="<?= htmlspecialchars($tanggal_selesai) ?>" required autocomplete="off" placeholder="Masukkan Tanggal Selesai">
                         </div>
 
                         <div class="form-group">
-                            <label for="kategori" class="user-form-label">Kategori</label>
+                            <label for="kategori" class="user-form-label">Kategori<span style="color:red">*</span></label>
                             <select name="kategori" id="kategori" class="user-form-input" required>
                                 <option value="">-- Pilih Kategori --</option>
                                 <option value="Agenda" <?= ($kategori === "Agenda" ? 'selected' : '') ?>>Agenda</option>

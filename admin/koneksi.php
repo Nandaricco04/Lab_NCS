@@ -6,8 +6,8 @@ function get_pg_connection(): PgSql\Connection {
         return $conn;
     }
 
+
     $connStr = "host=localhost port=5432 dbname=Ncs user=postgres password=cerr2407 options='--client_encoding=UTF8'";
-    $conn = @pg_connect($connStr);
 
     if (!$conn) {
          $err = pg_last_error() ?: 'Unknown error from pg_connect';
