@@ -7,14 +7,19 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
-$err = '';$id_pengabdian = $id_pengelola = $prodi = $judul = $skema = '';
+$err = '';
+$id_pengabdian = $id_pengelola = $prodi = $judul = $skema = '';
 
+// Ambil data Pengabdian beserta id_pengabdian (untuk value select option)
 $pengabdianOptions = [];
-$resPengabdian = q('SELECT "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
+$resPengabdian = q('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
 while ($rowOpt = pg_fetch_assoc($resPengabdian)) {
-    $pengabdianOptions[] = $rowOpt;
+    if ($rowOpt['id_pengabdian'] !== null) { // pastikan id_pengabdian tidak null
+        $pengabdianOptions[] = $rowOpt;
+    }
 }
 
+// Ambil data ketua/lab manager
 $ketuaOptions = [];
 $resKetua = qparams('SELECT "id_pengelola", "nama" FROM "struktur_organisasi" WHERE "posisi" = $1', ['Kepala Lab']);
 while ($rowKetua = pg_fetch_assoc($resKetua)) {
@@ -22,11 +27,11 @@ while ($rowKetua = pg_fetch_assoc($resKetua)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_pengabdian       = trim($_POST['id_pengabdian'] ?? '');
-    $id_pengelola        = trim($_POST['id_pengelola'] ?? '');
-    $prodi               = trim($_POST['prodi'] ?? '');
-    $judul               = trim($_POST['judul'] ?? '');
-    $skema               = trim($_POST['skema'] ?? '');
+    $id_pengabdian = trim($_POST['id_pengabdian'] ?? '');
+    $id_pengelola  = trim($_POST['id_pengelola'] ?? '');
+    $prodi         = trim($_POST['prodi'] ?? '');
+    $judul         = trim($_POST['judul'] ?? '');
+    $skema         = trim($_POST['skema'] ?? '');
 
     if ($id_pengabdian === '' || $id_pengelola === '' || $prodi === '' || $judul === '' || $skema === '') {
         $err = 'Semua field wajib diisi.';
@@ -76,8 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <select name="id_pengabdian" id="id_pengabdian" class="user-form-input" required>
                                 <option value="">-- Pilih Pengabdian --</option>
                                 <?php foreach ($pengabdianOptions as $opt): ?>
-                                    <option value="<?= htmlspecialchars($opt['id_pengabdian']) ?>"
-                                        <?= $id_pengabdian == $opt['id_pengabdian'] ? 'selected' : '' ?>>
+                                    <option value="<?= htmlspecialchars((string)$opt['id_pengabdian']) ?>"
+                                        <?= ((string)$id_pengabdian === (string)$opt['id_pengabdian']) ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($opt['tahun']) ?> - <?= htmlspecialchars($opt['judul']) ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -88,8 +93,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <select name="id_pengelola" id="id_pengelola" class="user-form-input" required>
                                 <option value="">-- Pilih Ketua (Kepala Lab) --</option>
                                 <?php foreach ($ketuaOptions as $opt): ?>
-                                    <option value="<?= htmlspecialchars($opt['id_pengelola']) ?>"
-                                        <?= $id_pengelola == $opt['id_pengelola'] ? 'selected' : '' ?>>
+                                    <option value="<?= htmlspecialchars((string)$opt['id_pengelola']) ?>"
+                                        <?= ((string)$id_pengelola === (string)$opt['id_pengelola']) ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($opt['nama']) ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -100,8 +105,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <input type="text" name="prodi" id="prodi" class="user-form-input" value="<?= htmlspecialchars($prodi) ?>" required autocomplete="off" placeholder="Masukkan Prodi">
                         </div>
                         <div class="form-group">
-                            <label for="judul" class="user-form-label">Judul<span style="color:red">*</span></label>
-                            <textarea name="judul" id="judul" class="user-form-input" required autocomplete="off" placeholder="Masukkan Judul"><?= htmlspecialchars($judul) ?></textarea>
+                            <label for="judul" class="user-form-label">Judul Detail<span style="color:red">*</span></label>
+                            <textarea name="judul" id="judul" class="user-form-input" required autocomplete="off" placeholder="Masukkan Judul Detail"><?= htmlspecialchars($judul) ?></textarea>
                         </div>
                         <div class="form-group">
                             <label for="skema" class="user-form-label">Skema<span style="color:red">*</span></label>

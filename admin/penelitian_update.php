@@ -54,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $dest_path = $upload_dir . $nama_file_unik;
 
             if (move_uploaded_file($tmp_name, $dest_path)) {
+                if ($file_path && file_exists(__DIR__ . '/' . $file_path)) {
+                    unlink(__DIR__ . '/' . $file_path);
+                }
                 $file_path_baru = 'files/' . $nama_file_unik;
             } else {
                 $err = 'Gagal upload file.';
@@ -71,12 +74,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'UPDATE "penelitian"
                    SET "judul"=$1, "tahun"=$2, "file_path"=$3
                  WHERE "id_penelitian"=$4',
-                [$judul, $tahun, $file_path_baru, $id_penelitian]
+                [$judul, $tahun, $file_path_baru, $id]
             );
             header('Location: penelitian.php');
             exit;
         } catch (Throwable $e) {
-            $err = $e->getMessage();
+            $err = 'Query gagal: ' . htmlspecialchars($e->getMessage());
         }
     }
 }
@@ -116,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <div class="form-group">
                             <label for="tahun" class="user-form-label">Tahun</label>
-                            <input type="date" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" placeholder="Masukkan tahun">
+                            <input type="date" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" min="1900" max="2100" required autocomplete="off" placeholder="Masukkan tahun (cth: 2025)">
                         </div>
 
                         <div class="form-group">

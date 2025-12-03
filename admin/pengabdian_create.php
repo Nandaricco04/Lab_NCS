@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             qparams(
-                'INSERT INTO "pengabdian" ("id_pengabdian", "tahun", "judul") VALUES ($1, $2, $3)',
-                [$id_pengabdian, $tahun, $judul]
+                'INSERT INTO "pengabdian" ("tahun", "judul") VALUES ($1, $2)',
+                [$tahun, $judul]
             );
             header('Location: pengabdian.php');
             exit;

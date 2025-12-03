@@ -43,7 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $no_wa_konsultasi   = trim($_POST['no_wa_konsultasi'] ?? '');
     $status             = trim($_POST['status'] ?? '');
 
-    if ($nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' || $tanggal_konsultasi === '' || $email_konsultasi === '' || $no_wa_konsultasi === '' || $status === '') {
+    if ($nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' 
+        || $tanggal_konsultasi === '' || $email_konsultasi === '' 
+        || $no_wa_konsultasi === '' || $status === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -51,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'UPDATE "konsultasi"
                    SET "nama_konsultasi"=$1, "nim_konsultasi"=$2, "isi_konsultasi"=$3, "tanggal_konsultasi"=$4, "email_konsultasi"=$5, "no_wa_konsultasi"=$6, "status"=$7
                  WHERE "id_konsultasi"=$8',
-                [$nama_konsultasi, $nim_konsultasi, $isi_konsultasi, $tanggal_konsultasi, $email_konsultasi, $no_wa_konsultasi, $status, $id_konsultasi]
+                [$nama_konsultasi, $nim_konsultasi, $isi_konsultasi, $tanggal_konsultasi, $email_konsultasi, $no_wa_konsultasi, $status, $id]
             );
             header('Location: konsultasi.php');
             exit;

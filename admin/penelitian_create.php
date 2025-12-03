@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_penelitian = $judul = $tahun = $file_path = '';
+$judul = $tahun = $file_path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul = trim($_POST['judul'] ?? '');

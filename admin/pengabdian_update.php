@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             qparams(
                 'UPDATE "pengabdian" SET "tahun"=$1, "judul"=$2 WHERE "id_pengabdian"=$3',
-                [$tahun, $judul, $id_pengabdian]
+                [$tahun, $judul, $id]
             );
             header('Location: pengabdian.php');
             exit;

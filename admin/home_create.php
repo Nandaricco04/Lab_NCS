@@ -9,10 +9,10 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_page = $Judul = $Gambar_Path = '';
+$Judul = $Gambar_Path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Judul      = trim($_POST['judul'] ?? '');
+    $Judul = trim($_POST['judul'] ?? '');
 
     if ($Judul === '' || empty($_FILES['gambar_path']['name'])) {
         $err = 'Semua field wajib diisi.';
@@ -27,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
 
-        if (!in_array($file_ext, $allowed_ext)) {
+        // Cek ukuran file maksimal 2MB
+        $file_size = $_FILES['gambar_path']['size'];
+        if ($file_size > 2 * 1024 * 1024) {
+            $err = 'Ukuran file gambar maksimal 2MB.';
+        } elseif (!in_array($file_ext, $allowed_ext)) {
             $err = 'Format file gambar harus jpg, jpeg, png, gif, atau bmp.';
         } else {
             $new_filename = uniqid('home_') . '.' . $file_ext;
@@ -44,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     header('Location: home.php');
                     exit;
                 } catch (Throwable $e) {
-                    $err = $e->getMessage();
+                    $err = 'Query gagal: ' . htmlspecialchars($e->getMessage());
                     if (file_exists($destination)) unlink($destination);
                 }
             } else {
@@ -81,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             Upload gambar maksimal 2MB (format: jpg/png/gif/bmp).
                         </div>
                         <?php if ($err): ?>
-                            <div class="form-error"><?= htmlspecialchars($err) ?></div>
+                            <div class="form-error"><?= $err ?></div>
                         <?php endif; ?>
 
                         <div class="form-group">

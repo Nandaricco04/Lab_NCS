@@ -26,11 +26,11 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$id_pengabdian      = $row['id_pengabdian'];
-$id_pengelola       = $row['id_pengelola'];
-$prodi              = $row['prodi'];
-$judul              = $row['judul'];
-$skema              = $row['skema'];
+$id_pengabdian = $row['id_pengabdian'];
+$id_pengelola  = $row['id_pengelola'];
+$prodi         = $row['prodi'];
+$judul         = $row['judul'];
+$skema         = $row['skema'];
 
 $pengabdianOptions = [];
 $resPengabdian = q('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" ORDER BY "tahun" DESC');
@@ -45,11 +45,11 @@ while ($rowKetua = pg_fetch_assoc($resKetua)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_pengabdian        = trim($_POST['id_pengabdian'] ?? '');
-    $id_pengelola         = trim($_POST['id_pengelola'] ?? '');
-    $prodi                = trim($_POST['prodi'] ?? '');
-    $judul                = trim($_POST['judul'] ?? '');
-    $skema                = trim($_POST['skema'] ?? '');
+    $id_pengabdian = trim($_POST['id_pengabdian'] ?? '');
+    $id_pengelola  = trim($_POST['id_pengelola'] ?? '');
+    $prodi         = trim($_POST['prodi'] ?? '');
+    $judul         = trim($_POST['judul'] ?? '');
+    $skema         = trim($_POST['skema'] ?? '');
 
     if ($id_pengabdian === '' || $id_pengelola === '' || $prodi === '' || $judul === '' || $skema === '') {
         $err = 'Semua field wajib diisi.';
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             qparams(
                 'UPDATE "detail_pengabdian" SET "id_pengabdian"=$1, "id_pengelola"=$2, "prodi"=$3, "judul"=$4, "skema"=$5 WHERE "id_detail_pengabdian"=$6',
-                [$id_pengabdian, $id_pengelola, $prodi, $judul, $skema, $id_detail_pengabdian]
+                [$id_pengabdian, $id_pengelola, $prodi, $judul, $skema, $id]
             );
             header('Location: detail_pengabdian.php');
             exit;

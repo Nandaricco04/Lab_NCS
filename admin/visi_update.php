@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="isi_visi" class="user-form-label">Isi</label><span style="color:red">*</span>
+                            <label for="isi_visi" class="user-form-label">Isi</label>
                             <textarea name="isi_visi" id="isi_visi" class="user-form-input" rows="8" required autocomplete="off" placeholder="Masukkan isi"><?= htmlspecialchars($Isi_Visi) ?></textarea>
                         </div>
 

@@ -7,18 +7,10 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require_once __DIR__ . '/koneksi.php';
 
-// Ambil mapping tahun untuk setiap id_pengabdian
-$resTahun = q('SELECT "id_pengabdian", "tahun" FROM "v_pengabdian"');
-$tahunRows = pg_fetch_all($resTahun) ?: [];
-$tahunMap = [];
-foreach ($tahunRows as $row) {
-    $tahunMap[$row['id_pengabdian']] = $row['tahun'];
-}
-
-// Ambil data detail pengabdian
-$res = q('SELECT d."id_detail_pengabdian", d."id_pengabdian", d."ketua", d."prodi", d."judul", d."skema"
-          FROM "v_detail_pengabdian" d
-          ORDER BY d."id_detail_pengabdian" ASC');
+// Ambil data langsung dari view v_detail_pengabdian yang sudah ada tahun_pengabdian dan judul_pengabdian.
+$res = q('SELECT "id_detail_pengabdian", "id_pengabdian", "prodi", "judul_detail", "skema", "judul_pengabdian", "tahun_pengabdian"
+          FROM "v_detail_pengabdian"
+          ORDER BY "id_detail_pengabdian" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
 
@@ -47,9 +39,9 @@ $rows = pg_fetch_all($res) ?: [];
                     <tr>
                         <th>ID Detail</th>
                         <th>Tahun Pengabdian</th>
-                        <th>Ketua</th>
+                        <th>Judul Pengabdian</th>
                         <th>Prodi</th>
-                        <th>Judul</th>
+                        <th>Judul Detail</th>
                         <th>Skema</th>
                         <th>Aksi</th>
                     </tr>
@@ -62,10 +54,10 @@ $rows = pg_fetch_all($res) ?: [];
                 <?php else: foreach ($rows as $r): ?>
                     <tr>
                         <td><?= htmlspecialchars($r['id_detail_pengabdian'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($tahunMap[$r['id_pengabdian']] ?? $r['id_pengabdian']) ?></td>
-                        <td><?= htmlspecialchars($r['ketua'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($r['tahun_pengabdian'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($r['judul_pengabdian'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['prodi'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($r['judul_detail'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['skema'] ?? '') ?></td>
                         <td>
                             <a class="btn btn-warning" href="detail_pengabdian_update.php?id=<?= urlencode($r['id_detail_pengabdian']) ?>">Ubah</a>
