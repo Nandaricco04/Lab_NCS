@@ -82,7 +82,10 @@ $totalPages = ceil($totalCount / $perPage);
                                     <?= htmlspecialchars($item['sub_judul']) ?>
                                 </p>
                                 <p class="sarana-unit">Tersedia <?= htmlspecialchars($item['jumlah_alat']) ?> Unit</p>
-                                <a href="peminjaman.php " class="btn btn-pinjaman">Ajukan Pinjaman</a>
+                                <a href="peminjaman.php?alat=<?= urlencode($item['judul']) ?>&id=<?= $item['id_sarana_prasarana'] ?>" class="btn btn-pinjaman">
+                                    Ajukan Pinjaman
+                                </a>
+
                             </div>
                         </div>
                     </div>

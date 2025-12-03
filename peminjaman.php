@@ -33,6 +33,10 @@ try {
     $homeData = null;
     error_log($e->getMessage());
 }
+
+$alatDipilih = isset($_GET['alat']) ? $_GET['alat'] : '';
+$idSarana = isset($_GET['id']) ? $_GET['id'] : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -71,14 +75,15 @@ try {
                             <form method="post" autocomplete="off">
                                 <div class="form-group">
                                     <label for="alat" class="form-label">Alat</label>
-                                    <select name="alat" id="alat" class="form-input" required>
-                                        <option value="">Pilih Alat</option>
-                                        <option value="Laptop">Laptop</option>
-                                        <option value="Proyektor">Proyektor</option>
-                                        <option value="Kamera">Kamera</option>
-                                        <option value="Mikrofon">Mikrofon</option>
-                                        <option value="Router">Router</option>
-                                    </select>
+                                    <div class="form-group">
+                                        <input type="text"
+                                            name="alat"
+                                            id="alat"
+                                            class="form-input"
+                                            value="<?= htmlspecialchars($alatDipilih) ?>"
+                                            readonly>
+                                        <input type="hidden" name="id_sarana_prasarana" value="<?= htmlspecialchars($idSarana) ?>">
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
