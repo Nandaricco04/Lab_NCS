@@ -23,8 +23,8 @@ $rows = pg_fetch_all($res) ?: [];
 </head>
 
 <body>
-     <div class="layout">
-        <?php include 'sidebar.php'; ?> 
+    <div class="layout">
+        <?php include 'sidebar.php'; ?>
 
         <div class="content">
             <div class="main-table-title">Daftar Admin</div>
@@ -43,31 +43,32 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (!$rows): ?>
-                    <tr>
-                        <td colspan="6">Belum ada user.</td>
-                    </tr>
-                <?php else: foreach ($rows as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['id_pengguna'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['username'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['password_hash'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['nama_lengkap'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['dibuat_pada'] ?? '') ?></td>
-                        <td>
-                            <a class="btn btn-warning" href="user_update.php?id=<?= urlencode($r['id_pengguna']) ?>">Ubah</a>
-                            <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengguna'] ?>').submit(); }">Hapus</a>
+                    <?php if (!$rows): ?>
+                        <tr>
+                            <td colspan="6">Belum ada user.</td>
+                        </tr>
+                        <?php else: foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($r['id_pengguna'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['username'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['password_hash'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['nama_lengkap'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['dibuat_pada'] ?? '') ?></td>
+                                <td>
+                                    <a class="btn btn-warning" href="user_update.php?id=<?= urlencode($r['id_pengguna']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengguna'] ?>').submit(); }">Hapus</a>
 
-                            <form id="deleteForm<?= $r['id_pengguna'] ?>" action="user_delete.php" method="post" style="display:none;">
-                                <input type="hidden" name="id_pengguna" value="<?= htmlspecialchars($r['id_pengguna ']) ?>">
-                            </form> 
-                        </td>
-                    </tr>
-                <?php endforeach;
-                endif; ?>
+                                    <form id="deleteForm<?= $r['id_pengguna'] ?>" action="user_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_pengguna" value="<?= htmlspecialchars($r['id_pengguna']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                    <?php endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

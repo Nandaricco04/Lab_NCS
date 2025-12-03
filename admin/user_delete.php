@@ -16,7 +16,7 @@ $name = trim((string)($_POST['id_pengguna'] ?? ''));
 
 if ($name === '') {
     http_response_code(400);
-    exit('Id Pengguna tidak valid.');
+    exit('Id Ruang tidak valid.');
 }
 
 try {
