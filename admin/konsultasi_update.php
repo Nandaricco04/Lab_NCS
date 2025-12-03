@@ -26,7 +26,6 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$id_konsultasi      = $row['id_konsultasi'];
 $nama_konsultasi    = $row['nama_konsultasi'];
 $nim_konsultasi     = $row['nim_konsultasi'];
 $isi_konsultasi     = $row['isi_konsultasi'];
@@ -36,7 +35,6 @@ $no_wa_konsultasi   = $row['no_wa_konsultasi'];
 $status             = $row['status'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_konsultasi      = trim($_POST['id_konsultasi'] ?? '');
     $nama_konsultasi    = trim($_POST['nama_konsultasi'] ?? '');
     $nim_konsultasi     = trim($_POST['nim_konsultasi'] ?? '');
     $isi_konsultasi     = trim($_POST['isi_konsultasi'] ?? '');
@@ -45,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $no_wa_konsultasi   = trim($_POST['no_wa_konsultasi'] ?? '');
     $status             = trim($_POST['status'] ?? '');
 
-    if ($id_konsultasi === '' || $nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' || $tanggal_konsultasi === '' || $email_konsultasi === '' || $no_wa_konsultasi === '' || $status === '') {
+    if ($nama_konsultasi === '' || $nim_konsultasi === '' || $isi_konsultasi === '' || $tanggal_konsultasi === '' || $email_konsultasi === '' || $no_wa_konsultasi === '' || $status === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -91,10 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_konsultasi" class="user-form-label">Id Konsultasi</label>
-                            <input type="text" name="id_konsultasi" id="id_konsultasi" class="user-form-input" value="<?= htmlspecialchars($id_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan Id Konsultasi" readonly>
-                        </div>
                         <div class="form-group">
                             <label for="nama_konsultasi" class="user-form-label">Nama Konsultasi</label>
                             <input type="text" name="nama_konsultasi" id="nama_konsultasi" class="user-form-input" value="<?= htmlspecialchars($nama_konsultasi) ?>" required autocomplete="off" placeholder="Masukkan Nama Konsultasi">

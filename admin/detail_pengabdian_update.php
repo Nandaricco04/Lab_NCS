@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_detail_pengabdian", "id_pengabdian", "id_pengelola", "prodi", "judul", "skema" FROM "detail_pengabdian" WHERE "id_detail_pengabdian"=$1', [$id]);
+    $res = qparams('SELECT "id_pengabdian", "id_pengelola", "prodi", "judul", "skema" FROM "detail_pengabdian" WHERE "id_detail_pengabdian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,7 +26,6 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$id_detail_pengabdian = $row['id_detail_pengabdian'];
 $id_pengabdian      = $row['id_pengabdian'];
 $id_pengelola       = $row['id_pengelola'];
 $prodi              = $row['prodi'];
@@ -46,14 +45,13 @@ while ($rowKetua = pg_fetch_assoc($resKetua)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_detail_pengabdian = trim($_POST['id_detail_pengabdian'] ?? '');
     $id_pengabdian        = trim($_POST['id_pengabdian'] ?? '');
     $id_pengelola         = trim($_POST['id_pengelola'] ?? '');
     $prodi                = trim($_POST['prodi'] ?? '');
     $judul                = trim($_POST['judul'] ?? '');
     $skema                = trim($_POST['skema'] ?? '');
 
-    if ($id_detail_pengabdian === '' || $id_pengabdian === '' || $id_pengelola === '' || $prodi === '' || $judul === '' || $skema === '') {
+    if ($id_pengabdian === '' || $id_pengelola === '' || $prodi === '' || $judul === '' || $skema === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -96,10 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_detail_pengabdian" class="user-form-label">ID Detail Pengabdian</label>
-                            <input type="text" name="id_detail_pengabdian" id="id_detail_pengabdian" class="user-form-input" value="<?= htmlspecialchars($id_detail_pengabdian) ?>" required autocomplete="off" readonly>
-                        </div>
                         <div class="form-group">
                             <label for="id_pengabdian" class="user-form-label">Tahun & Judul Pengabdian</label>
                             <select name="id_pengabdian" id="id_pengabdian" class="user-form-input" required>

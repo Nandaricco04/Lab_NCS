@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_pengabdian", "tahun", "judul" FROM "pengabdian" WHERE "id_pengabdian"=$1', [$id]);
+    $res = qparams('SELECT "tahun", "judul" FROM "pengabdian" WHERE "id_pengabdian"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,16 +26,14 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$id_pengabdian = $row['id_pengabdian'];
 $tahun = $row['tahun'];
 $judul = $row['judul'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_pengabdian = trim($_POST['id_pengabdian'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
 
-    if ($id_pengabdian === '' || $tahun === '' || $judul === '') {
+    if ($tahun === '' || $judul === '') {
         $err = 'Semua field wajib diisi.';
     } elseif (!preg_match('/^[0-9]{4}$/', $tahun)) {
         $err = 'Tahun harus berupa 4 digit angka.';
@@ -79,10 +77,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_pengabdian" class="user-form-label">Id Pengabdian</label>
-                            <input type="text" name="id_pengabdian" id="id_pengabdian" class="user-form-input" value="<?= htmlspecialchars($id_pengabdian) ?>" required autocomplete="off" readonly>
-                        </div>
                         <div class="form-group">
                             <label for="tahun" class="user-form-label">Tahun</label>
                             <input type="text" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" maxlength="4" pattern="[0-9]{4}" placeholder="Contoh: 2024">

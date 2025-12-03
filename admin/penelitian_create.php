@@ -12,11 +12,10 @@ $err = '';
 $id_penelitian = $judul = $tahun = $file_path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_penelitian = trim($_POST['id_penelitian'] ?? '');
     $judul = trim($_POST['judul'] ?? '');
     $tahun = trim($_POST['tahun'] ?? '');
 
-    if ($id_penelitian === '' || $judul === '' || $tahun === '' || empty($_FILES['file_path']['name'])) {
+    if ($judul === '' || $tahun === '' || empty($_FILES['file_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/files/';
@@ -41,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "penelitian" ("id_penelitian", "judul", "tahun", "file_path") VALUES ($1, $2, $3, $4)',
-                        [$id_penelitian, $judul, $tahun, $file_path]
+                        'INSERT INTO "penelitian" ("judul", "tahun", "file_path") VALUES ($1, $2, $3)',
+                        [$judul, $tahun, $file_path]
                     );
                     header('Location: penelitian.php');
                     exit;
@@ -88,22 +87,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="id_penelitian" class="user-form-label">Id Penelitian</label>
-                            <input type="text" name="id_penelitian" id="id_penelitian" class="user-form-input" value="<?= htmlspecialchars($id_penelitian) ?>" required autocomplete="off" placeholder="Masukkan Id Penelitian">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="judul" class="user-form-label">Judul</label>
+                            <label for="judul" class="user-form-label">Judul<span style="color:red">*</span></label>
                             <input type="text" name="judul" id="judul" class="user-form-input" value="<?= htmlspecialchars($judul) ?>" required autocomplete="off" placeholder="Masukkan Judul">
                         </div>
 
                         <div class="form-group">
-                            <label for="tahun" class="user-form-label">Tahun</label>
+                            <label for="tahun" class="user-form-label">Tahun<span style="color:red">*</span></label>
                             <input type="date" name="tahun" id="tahun" class="user-form-input" value="<?= htmlspecialchars($tahun) ?>" required autocomplete="off" placeholder="Masukkan tahun">
                         </div>
 
                         <div class="form-group">
-                            <label for="file_path" class="user-form-label">File PDF</label>
+                            <label for="file_path" class="user-form-label">File PDF<span style="color:red">*</span></label>
                             <input type="file" name="file_path" id="file_path" class="user-form-input" required accept=".pdf">
                         </div>
 

@@ -8,7 +8,7 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$id_peminjaman = $id_sarana_prasarana = $nama_peminjam = $nim_peminjam = $email_peminjam = $no_wa_peminjam = $jumlah_pinjam = $tanggal_peminjaman = $tanggal_pengembalian = '';
+$id_sarana_prasarana = $nama_peminjam = $nim_peminjam = $email_peminjam = $no_wa_peminjam = $jumlah_pinjam = $tanggal_peminjaman = $tanggal_pengembalian = '';
 $status = 'Proses';
 
 $saranaOptions = [];
@@ -18,7 +18,6 @@ while ($rowOpt = pg_fetch_assoc($resSarana)) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $id_peminjaman = trim($_POST['id_peminjaman'] ?? '');
     $id_sarana_prasarana = trim($_POST['id_sarana_prasarana'] ?? '');
     $nama_peminjam = trim($_POST['nama_peminjam'] ?? '');
     $nim_peminjam = trim($_POST['nim_peminjam'] ?? '');
@@ -30,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = trim($_POST['status'] ?? 'proses');
 
     if (
-        $id_peminjaman === '' || $id_sarana_prasarana === '' || $nama_peminjam === '' || $nim_peminjam === '' ||
+        $id_sarana_prasarana === '' || $nama_peminjam === '' || $nim_peminjam === '' ||
         $email_peminjam === '' || $no_wa_peminjam === '' || $jumlah_pinjam === '' ||
         $tanggal_peminjaman === '' || $tanggal_pengembalian === '' || $status === ''
     ) {
@@ -39,11 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             qparams(
                 'INSERT INTO "peminjaman" (
-                    "id_peminjaman", "id_sarana_prasarana", "nama_peminjam", "nim_peminjam", "email_peminjam",
+                    "id_sarana_prasarana", "nama_peminjam", "nim_peminjam", "email_peminjam",
                     "no_wa_peminjam", "jumlah_pinjam", "tanggal_peminjaman", "tanggal_pengembalian", "status"
-                ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)',
+                ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)',
                 [
-                    $id_peminjaman, $id_sarana_prasarana, $nama_peminjam, $nim_peminjam, $email_peminjam,
+                    $id_sarana_prasarana, $nama_peminjam, $nim_peminjam, $email_peminjam,
                     $no_wa_peminjam, $jumlah_pinjam, $tanggal_peminjaman, $tanggal_pengembalian, $status
                 ]
             );
@@ -82,11 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
                         <div class="form-group">
-                            <label for="id_peminjaman" class="user-form-label">ID Peminjaman</label>
-                            <input type="text" name="id_peminjaman" id="id_peminjaman" class="user-form-input" value="<?= htmlspecialchars($id_peminjaman) ?>" required autocomplete="off" placeholder="Masukkan ID Peminjaman">
-                        </div>
-                        <div class="form-group">
-                            <label for="id_sarana_prasarana" class="user-form-label">Sarana/Prasarana</label>
+                            <label for="id_sarana_prasarana" class="user-form-label">Sarana/Prasarana<span style="color:red">*</span></label>
                             <select name="id_sarana_prasarana" id="id_sarana_prasarana" class="user-form-input" required>
                                 <option value="">-- Pilih Sarana/Prasarana --</option>
                                 <?php foreach ($saranaOptions as $opt): ?>
@@ -98,31 +93,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="nama_peminjam" class="user-form-label">Nama Peminjam</label>
+                            <label for="nama_peminjam" class="user-form-label">Nama Peminjam<span style="color:red">*</span></label>
                             <input type="text" name="nama_peminjam" id="nama_peminjam" class="user-form-input" value="<?= htmlspecialchars($nama_peminjam) ?>" required autocomplete="off" placeholder="Masukkan Nama Peminjam">
                         </div>
                         <div class="form-group">
-                            <label for="nim_peminjam" class="user-form-label">NIM Peminjam</label>
+                            <label for="nim_peminjam" class="user-form-label">NIM Peminjam<span style="color:red">*</span></label>
                             <input type="text" name="nim_peminjam" id="nim_peminjam" class="user-form-input" value="<?= htmlspecialchars($nim_peminjam) ?>" required autocomplete="off" placeholder="Masukkan NIM">
                         </div>
                         <div class="form-group">
-                            <label for="email_peminjam" class="user-form-label">Email</label>
+                            <label for="email_peminjam" class="user-form-label">Email<span style="color:red">*</span></label>
                             <input type="email" name="email_peminjam" id="email_peminjam" class="user-form-input" value="<?= htmlspecialchars($email_peminjam) ?>" required autocomplete="off" placeholder="Masukkan Email">
                         </div>
                         <div class="form-group">
-                            <label for="no_wa_peminjam" class="user-form-label">No. Whatsapp</label>
+                            <label for="no_wa_peminjam" class="user-form-label">No. Whatsapp<span style="color:red">*</span></label>
                             <input type="text" name="no_wa_peminjam" id="no_wa_peminjam" class="user-form-input" value="<?= htmlspecialchars($no_wa_peminjam) ?>" required autocomplete="off" placeholder="Masukkan No. Whatsapp">
                         </div>
                         <div class="form-group">
-                            <label for="jumlah_pinjam" class="user-form-label">Jumlah Pinjam</label>
+                            <label for="jumlah_pinjam" class="user-form-label">Jumlah Pinjam<span style="color:red">*</span></label>
                             <input type="number" name="jumlah_pinjam" id="jumlah_pinjam" class="user-form-input" value="<?= htmlspecialchars($jumlah_pinjam) ?>" required autocomplete="off" min="1" placeholder="Masukkan Jumlah">
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_peminjaman" class="user-form-label">Tanggal Peminjaman</label>
+                            <label for="tanggal_peminjaman" class="user-form-label">Tanggal Peminjaman<span style="color:red">*</span></label>
                             <input type="date" name="tanggal_peminjaman" id="tanggal_peminjaman" class="user-form-input" value="<?= htmlspecialchars($tanggal_peminjaman) ?>" required>
                         </div>
                         <div class="form-group">
-                            <label for="tanggal_pengembalian" class="user-form-label">Tanggal Pengembalian</label>
+                            <label for="tanggal_pengembalian" class="user-form-label">Tanggal Pengembalian<span style="color:red">*</span></label>
                             <input type="date" name="tanggal_pengembalian" id="tanggal_pengembalian" class="user-form-input" value="<?= htmlspecialchars($tanggal_pengembalian) ?>" required>
                         </div>
                         <div class="form-group">

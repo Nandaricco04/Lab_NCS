@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_sarana_prasarana", "gambar_path", "judul", "sub_judul", "jumlah_alat" FROM "sarana_prasarana" WHERE "id_sarana_prasarana"=$1', [$id]);
+    $res = qparams('SELECT "gambar_path", "judul", "sub_judul", "jumlah_alat" FROM "sarana_prasarana" WHERE "id_sarana_prasarana"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,14 +26,12 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Sarana_Prasarana = $row['id_sarana_prasarana'];
 $Gambar_Path = $row['gambar_path'];
 $Judul = $row['judul'];
 $Sub_Judul = $row['sub_judul'];
 $Jumlah_Alat = $row['jumlah_alat'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Sarana_Prasarana = trim($_POST['id_sarana_prasarana'] ?? '');
     $gambar_path_baru = $Gambar_Path;
     $Judul = trim($_POST['judul'] ?? '');
     $Sub_Judul = trim($_POST['sub_judul'] ?? '');
@@ -57,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($Id_Sarana_Prasarana === '' || $Judul === '' || $Sub_Judul === '' || $Jumlah_Alat === '' || $gambar_path_baru === '') {
+    if ($Judul === '' || $Sub_Judul === '' || $Jumlah_Alat === '' || $gambar_path_baru === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -103,11 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_sarana_prasarana" class="user-form-label">Id Sarana Prasarana</label>
-                            <input type="text" name="id_sarana_prasarana" id="id_sarana_prasarana" class="user-form-input" value="<?= htmlspecialchars($Id_Sarana_Prasarana) ?>" required autocomplete="off" placeholder="Masukkan Id Sarana Prasarana">
-                        </div>
-
                         <div class="form-group">
                             <label for="gambar_path" class="user-form-label">Gambar</label>
                             <input type="file" name="gambar_path" id="gambar_path" class="user-form-input" accept="image/*">
