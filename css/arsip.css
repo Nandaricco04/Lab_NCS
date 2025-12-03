@@ -1,0 +1,430 @@
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 35vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: color-mix(in srgb, var(--color-primary) 50%, transparent);
+    transition: background 0.5s ease;
+}
+
+.hero-section:hover .hero-overlay {
+    background: color-mix(in srgb, var(--color-primary) 40%, transparent);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: var(--color-white);
+    padding: 2rem;
+    transform: translateY(0);
+    transition: transform 0.6s ease;
+}
+
+.hero-section:hover .hero-content {
+    transform: translateY(-10px);
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+    line-height: 1.3;
+    margin: 0;
+}
+
+/* Archive Section */
+.archive-section {
+    padding: 4rem 0;
+    background-color: #f8f9fa;
+}
+
+.archive-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.archive-title {
+    color: var(--color-primary);
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.archive-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Search and Filter */
+.search-filter-container {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.search-filter-form {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search-box {
+    flex: 1;
+}
+
+.search-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.filter-box {
+    min-width: 200px;
+}
+
+.filter-select {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+
+.btn-search {
+    padding: 12px 30px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+    background: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--color-primary) 30%, transparent);
+}
+
+/* Type Tabs */
+.type-tabs {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+    border-bottom: none;
+}
+
+.tab-btn {
+    padding: 12px 40px;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    border: 2px solid var(--color-primary);
+    background: white;
+    color: var(--color-primary);
+    font-size: 1rem;
+}
+
+.tab-btn:hover {
+    background: color-mix(in srgb, var(--color-primary) 10%, white);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tab-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* Documents List */
+.documents-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Table Container */
+.table-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+.documents-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.documents-table thead {
+    background: var(--color-primary);
+    color: white;
+}
+
+.documents-table th {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    border: 2px solid var(--color-primary);
+}
+
+.documents-table th:first-child {
+    border-radius: 8px 0 0 0;
+    width: 80px;
+}
+
+.documents-table th:last-child {
+    border-radius: 0 8px 0 0;
+    width: 150px;
+}
+
+.documents-table tbody tr {
+    border-bottom: 2px solid #e0e0e0;
+    transition: background 0.2s ease;
+}
+
+.documents-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.documents-table td {
+    padding: 15px 20px;
+    border-left: 2px solid #e0e0e0;
+    border-right: 2px solid #e0e0e0;
+}
+
+.documents-table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 8px;
+}
+
+.documents-table tbody tr:last-child td:last-child {
+    border-radius: 0 0 8px 0;
+}
+
+.btn-table-detail {
+    display: inline-block;
+    padding: 8px 24px;
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-table-detail:hover {
+    background: var(--color-secondary);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.document-card {
+    background: white;
+    border-radius: 12px;
+    padding: 25px 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.document-card:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.document-title {
+    color: var(--color-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.document-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.btn-detail {
+    display: inline-block;
+    padding: 8px 20px;
+    background: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-detail:hover {
+    background: var(--color-secondary);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #999;
+}
+
+.no-results p {
+    font-size: 1.1rem;
+}
+
+/* Pagination */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.btn-pagination {
+    padding: 10px 25px;
+    background: white;
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-pagination:hover {
+    background: var(--color-primary);
+    color: white;
+}
+
+.pagination-info {
+    color: #666;
+    font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .archive-title {
+        font-size: 1.5rem;
+    }
+
+    .archive-subtitle {
+        font-size: 1rem;
+    }
+
+    .search-filter-form {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-box {
+        min-width: 100%;
+    }
+
+    .type-tabs {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .document-card {
+        padding: 20px;
+    }
+
+    .document-title {
+        font-size: 1.1rem;
+    }
+
+    .table-container {
+        padding: 10px;
+    }
+
+    .documents-table {
+        font-size: 0.9rem;
+    }
+
+    .documents-table th,
+    .documents-table td {
+        padding: 10px;
+    }
+
+    .btn-table-detail {
+        padding: 6px 16px;
+        font-size: 0.85rem;
+    }
+
+    .pagination-container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .btn-pagination {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .search-filter-container {
+        padding: 20px;
+    }
+
+    .document-card {
+        padding: 15px;
+    }
+}
