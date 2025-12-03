@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_title", "judul", "gambar_path" FROM "title_pages" WHERE "id_title"=$1', [$id]);
+    $res = qparams('SELECT "judul", "gambar_path" FROM "title_pages" WHERE "id_title"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,12 +26,10 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Title = $row['id_title'];
 $Judul = $row['judul'];
 $Gambar_Path = $row['gambar_path'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Title = trim($_POST['id_title'] ?? '');
     $Judul = trim($_POST['judul'] ?? '');
 
     $gambar_path_baru = $Gambar_Path;
@@ -54,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($Id_Title === '' || $Judul === '' || $gambar_path_baru === '') {
+    if ($Judul === '' || $gambar_path_baru === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -100,10 +98,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_title" class="user-form-label">Id Title</label>
-                            <input type="text" name="id_title" id="id_title" class="user-form-input" value="<?= htmlspecialchars($Id_Title) ?>" required autocomplete="off" placeholder="Masukkan Id Title">
-                        </div>
 
                         <div class="form-group">
                             <label for="judul" class="user-form-label">Judul</label>

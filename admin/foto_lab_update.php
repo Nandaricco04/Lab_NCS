@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_ruang", "gambar_path" FROM "ruang_lab" WHERE "id_ruang"=$1', [$id]);
+    $res = qparams('SELECT "gambar_path" FROM "ruang_lab" WHERE "id_ruang"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,7 +26,6 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Ruang = $row['id_ruang'];
 $Gambar_path = $row['gambar_path'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -97,10 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_ruang" class="user-form-label">Id Ruang</label>
-                            <input type="text" name="id_ruang" id="id_ruang" class="user-form-input" value="<?= htmlspecialchars($Id_Ruang) ?>" required autocomplete="off" placeholder="Masukkan Id Ruang">
-                        </div>
 
                         <div class="form-group">
                             <label for="gambar_path" class="user-form-label">Foto</label>

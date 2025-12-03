@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_peta_jalan", "judul", "tahun", "file_path" FROM "peta_jalan" WHERE "id_peta_jalan"=$1', [$id]);
+    $res = qparams('SELECT "judul", "tahun", "file_path" FROM "peta_jalan" WHERE "id_peta_jalan"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,13 +26,11 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Peta_Jalan = $row['id_peta_jalan'];
 $Judul = $row['judul'];
 $Tahun = $row['tahun'];
 $file_path = $row['file_path'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Peta_Jalan = trim($_POST['id_peta_jalan'] ?? '');
     $Judul = trim($_POST['judul'] ?? '');
     $Tahun = trim($_POST['tahun'] ?? '');
     $file_path_baru = $file_path;
@@ -66,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($Id_Peta_Jalan === '' || $Judul === '' || $Tahun === '') {
+    if ($Judul === '' || $Tahun === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         if (!$err) {
@@ -75,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'UPDATE "peta_jalan"
                        SET "judul"=$1, "tahun"=$2, "file_path"=$3
                      WHERE "id_peta_jalan"=$4',
-                    [$Judul, $Tahun, $file_path_baru, $Id_Peta_Jalan]
+                    [$Judul, $Tahun, $file_path_baru, $id]
                 );
                 header('Location: peta_jalan.php');
                 exit;
@@ -113,10 +111,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_peta_jalan" class="user-form-label">Id Peta Jalan</label>
-                            <input type="text" name="id_peta_jalan" id="id_peta_jalan" class="user-form-input" value="<?= htmlspecialchars($Id_Peta_Jalan) ?>" required autocomplete="off" placeholder="Masukkan Id Peta Jalan" readonly>
-                        </div>
 
                         <div class="form-group">
                             <label for="judul" class="user-form-label">Judul</label>

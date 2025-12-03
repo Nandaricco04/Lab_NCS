@@ -9,12 +9,11 @@ if (!isset($_SESSION['id_pengguna'])) {
 require __DIR__ . '/koneksi.php';
 
 $err = '';
-$Id_ruang = $Gambar_path = '';
+$Gambar_path = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_ruang   = trim($_POST['Id_ruang'] ?? '');
 
-    if ($Id_ruang === '' || empty($_FILES['gambar_path']['name'])) {
+    if (empty($_FILES['gambar_path']['name'])) {
         $err = 'Semua field wajib diisi.';
     } else {
         $upload_dir = __DIR__ . '/images/';
@@ -39,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 try {
                     qparams(
-                        'INSERT INTO "ruang_lab" ("id_ruang", "gambar_path") VALUES ($1, $2)',
-                        [$Id_ruang, $foto]
+                        'INSERT INTO "ruang_lab" ("gambar_path") VALUES ($1)',
+                        [$foto]
                     );
                     header('Location: foto_lab.php');
                     exit;
@@ -86,12 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endif; ?>
 
                         <div class="form-group">
-                            <label for="Id_ruang" class="user-form-label">Id Ruang</label>
-                            <input type="text" name="Id_ruang" id="Id_ruang" class="user-form-input" value="<?= htmlspecialchars($Id_ruang) ?>" required autocomplete="off" placeholder="Masukkan Id Ruang">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gambar_path" class="user-form-label">Foto</label>
+                            <label for="gambar_path" class="user-form-label">Foto<span style="color:red;">*</span></label>
                             <input type="file" name="gambar_path" id="gambar_path" class="user-form-input" required accept=".jpg,.jpeg,.png,.gif,.bmp">
                         </div>
 
@@ -99,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <button class="btn-user-primary" type="submit">
                                 <span class="iconify" data-icon="mdi:content-save"></span> Simpan
                             </button>
-                            <a class="btn-user-warning" href="struktur_organisasi.php">
+                            <a class="btn-user-warning" href="foto_lab.php">
                                 <span class="iconify" data-icon="mdi:arrow-left"></span> Kembali
                             </a>
                         </div>

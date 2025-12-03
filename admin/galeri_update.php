@@ -16,7 +16,7 @@ if ($id === '') {
 }
 
 try {
-    $res = qparams('SELECT "id_agenda_kegiatan", "keterangan", "tanggal_mulai", "tanggal_selesai", "kategori", "foto" FROM "agenda_kegiatan" WHERE "id_agenda_kegiatan"=$1', [$id]);
+    $res = qparams('SELECT "keterangan", "tanggal_mulai", "tanggal_selesai", "kategori", "foto" FROM "agenda_kegiatan" WHERE "id_agenda_kegiatan"=$1', [$id]);
     $row = pg_fetch_assoc($res);
     if (!$row) {
         http_response_code(404);
@@ -26,7 +26,6 @@ try {
     exit('Error: ' . htmlspecialchars($e->getMessage()));
 }
 
-$Id_Agenda_Kegiatan = $row['id_agenda_kegiatan'];
 $Keterangan = $row['keterangan'];
 $Tanggal_Mulai = $row['tanggal_mulai'];
 $Tanggal_Selesai = $row['tanggal_selesai'];
@@ -34,7 +33,6 @@ $Kategori = $row['kategori'];
 $foto = $row['foto'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $Id_Agenda_Kegiatan = trim($_POST['id_agenda_kegiatan'] ?? '');
     $Keterangan = trim($_POST['keterangan'] ?? '');
     $Tanggal_Mulai = trim($_POST['tanggal_mulai'] ?? '');
     $Tanggal_Selesai = trim($_POST['tanggal_selesai'] ?? '');
@@ -59,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if ($Id_Agenda_Kegiatan === '' || $Keterangan === '' || $Tanggal_Mulai === '' || $Tanggal_Selesai === '' || $Kategori === '' || $foto_baru === '') {
+    if ($Keterangan === '' || $Tanggal_Mulai === '' || $Tanggal_Selesai === '' || $Kategori === '' || $foto_baru === '') {
         $err = 'Semua field wajib diisi.';
     } else {
         try {
@@ -105,10 +103,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if ($err): ?>
                             <div class="form-error"><?= htmlspecialchars($err) ?></div>
                         <?php endif; ?>
-                        <div class="form-group">
-                            <label for="id_agenda_kegiatan" class="user-form-label">Id Agenda Kegiatan</label>
-                            <input type="text" name="id_agenda_kegiatan" id="id_agenda_kegiatan" class="user-form-input" value="<?= htmlspecialchars($Id_Agenda_Kegiatan) ?>" required autocomplete="off" placeholder="Masukkan Id Agenda Kegiatan">
-                        </div>
 
                         <div class="form-group">
                             <label for="keterangan" class="user-form-label">Keterangan</label>
