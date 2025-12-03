@@ -7,6 +7,13 @@ if (!isset($_SESSION['id_pengguna'])) {
 
 require __DIR__ . '/koneksi.php';
 
+$resAlat = q('SELECT "id_sarana_prasarana", "judul" FROM "sarana_prasarana"');
+$alatRows = pg_fetch_all($resAlat) ?: [];
+$namaAlatMap = [];
+foreach ($alatRows as $alat) {
+    $namaAlatMap[$alat['id_sarana_prasarana']] = $alat['judul'];
+}
+
 $res = q('SELECT "id_peminjaman", "id_sarana_prasarana", "nama_peminjam", "nim_peminjam", "email_peminjam", "no_wa_peminjam", "jumlah_pinjam", "tanggal_peminjaman", "tanggal_pengembalian", "status" FROM "v_peminjaman" ORDER BY "id_peminjaman" ASC');
 $rows = pg_fetch_all($res) ?: [];
 ?>
@@ -35,7 +42,7 @@ $rows = pg_fetch_all($res) ?: [];
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>ID Sarana/Prasarana</th>
+                        <th>Nama Alat</th>
                         <th>Nama Peminjam</th>
                         <th>NIM</th>
                         <th>Email</th>
@@ -55,7 +62,9 @@ $rows = pg_fetch_all($res) ?: [];
                     <?php else: foreach ($rows as $r): ?>
                         <tr>
                             <td><?= htmlspecialchars($r['id_peminjaman'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['id_sarana_prasarana'] ?? '') ?></td>
+                            <td>
+                                <?= htmlspecialchars($namaAlatMap[$r['id_sarana_prasarana']] ?? $r['id_sarana_prasarana']) ?>
+                            </td>
                             <td><?= htmlspecialchars($r['nama_peminjam'] ?? '') ?></td>
                             <td><?= htmlspecialchars($r['nim_peminjam'] ?? '') ?></td>
                             <td><?= htmlspecialchars($r['email_peminjam'] ?? '') ?></td>
@@ -78,4 +87,4 @@ $rows = pg_fetch_all($res) ?: [];
         </div>
     </div>
 </body>
-</html> 
+</html>
