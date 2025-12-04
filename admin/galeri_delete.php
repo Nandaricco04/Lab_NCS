@@ -20,6 +20,16 @@ if ($name === '') {
 }
 
 try {
+    $res = qparams('SELECT "gambar_path" FROM "agenda_kegiatan" WHERE "id_agenda_kegiatan" = $1', [$name]);
+    $row = pg_fetch_assoc($res);
+    if ($row && !empty($row['gambar_path'])) {
+        $gambar_path = $row['gambar_path'];
+        $file_path = __DIR__ . '/' . $gambar_path;
+        if (file_exists($file_path)) {
+            unlink($file_path);
+        }
+    }
+
     qparams('DELETE FROM "agenda_kegiatan" WHERE "id_agenda_kegiatan" = $1', [$name]);
     header('Location: galeri.php');
     exit;

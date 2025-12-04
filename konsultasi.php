@@ -22,7 +22,6 @@ require_once 'admin/koneksi.php';
     }
 }
 
-
 // Ambil data title/hero
 try {
     $sql = "SELECT * FROM v_title_pages LIMIT 1";

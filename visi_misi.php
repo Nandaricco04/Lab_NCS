@@ -3,7 +3,7 @@ require_once 'admin/koneksi.php';
 
 // Fetch home data for background image
 try {
-    $sql = "SELECT * FROM v_title_pages LIMIT 1";
+    $sql = "SELECT * FROM v_title_pages WHERE id_title = 2 LIMIT 1";
     $result = q($sql);
     $homeData = pg_fetch_assoc($result);
 } catch (Exception $e) {

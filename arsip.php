@@ -3,7 +3,7 @@ require_once 'admin/koneksi.php';
 
 // Ambil data title/hero
 try {
-    $sql = "SELECT * FROM v_title_pages WHERE id_title = 6 LIMIT 1";
+    $sql = "SELECT * FROM v_title_pages WHERE id_title = 7 LIMIT 1";
     $result = q($sql);
     $homeData = pg_fetch_assoc($result);
 } catch (Exception $e) {
@@ -44,7 +44,7 @@ if ($search) {
 if ($year !== 'all') {
     $sql .= " AND tahun = '$year'";
 }
-$sql .= " ORDER BY tahun DESC LIMIT $perPage OFFSET $offset";
+$sql .= " ORDER BY tahun ASC LIMIT $perPage OFFSET $offset";
 $result = q($sql);
 $documents = pg_fetch_all($result) ?: [];
 
