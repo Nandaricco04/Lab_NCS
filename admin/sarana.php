@@ -62,7 +62,7 @@ $rows = pg_fetch_all($res) ?: [];
                         <td><?= htmlspecialchars($r['jumlah_alat']) ?></td>
 
                         <td>
-                            <a class="btn btn-warning" href="sarana_update.php?id=<?= urlencode($r['id_sarana_prasarana']) ?>">Ubah</a>
+                            <a class="btn btn-warning" style="margin: 2px;" href="sarana_update.php?id=<?= urlencode($r['id_sarana_prasarana']) ?>">Ubah</a>
                             <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_sarana_prasarana'] ?>').submit(); }">Hapus</a>
 
                             <form id="deleteForm<?= $r['id_sarana_prasarana'] ?>" action="sarana_delete.php" method="post" style="display:none;">

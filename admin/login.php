@@ -35,9 +35,14 @@
 						<span class="focus-input100"></span>
 					</div>
 
-					<div class="wrap-input100 validate-input m-b-18" data-validate="Password is required">
+					<div class="wrap-input100 validate-input m-b-18" data-validate="Password is required" style="position: relative;">
 						<span class="label-input100">Password</span>
-						<input id="password" class="input100" type="password" name="password" placeholder="Enter password" required>
+						<div class="password-field">
+							<input id="password" class="input100" type="password" name="password" placeholder="Enter password" required>
+							<span class="toggle-password">
+								<i class="fa fa-eye" id="togglePasswordIcon"></i>
+							</span>
+						</div>
 						<span class="focus-input100"></span>
 					</div>
 
@@ -85,6 +90,22 @@
 				$('#errorModal').modal('show');
 			});
 		<?php endif; ?>
+
+		$(document).ready(function() {
+			$('.toggle-password').on('click', function() {
+				const passwordInput = $('#password');
+				const icon = $('#togglePasswordIcon');
+				const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
+				passwordInput.attr('type', type);
+
+				// ganti icon
+				if (type === 'text') {
+					icon.removeClass('fa-eye').addClass('fa-eye-slash');
+				} else {
+					icon.removeClass('fa-eye-slash').addClass('fa-eye');
+				}
+			});
+		});
 	</script>
 </body>
 

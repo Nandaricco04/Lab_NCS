@@ -62,7 +62,7 @@ $rows = pg_fetch_all($res) ?: [];
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a class="btn btn-warning" href="penelitian_update.php?id=<?= urlencode($r['id_penelitian']) ?>">Ubah</a>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="penelitian_update.php?id=<?= urlencode($r['id_penelitian']) ?>">Ubah</a>
                                     <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_penelitian'] ?>').submit(); }">Hapus</a>
                                     <form id="deleteForm<?= $r['id_penelitian'] ?>" action="penelitian_delete.php" method="post" style="display:none;">
                                         <input type="hidden" name="id_penelitian" value="<?= htmlspecialchars($r['id_penelitian']) ?>">

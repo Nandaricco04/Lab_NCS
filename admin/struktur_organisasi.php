@@ -61,7 +61,7 @@ $rows = pg_fetch_all($res) ?: [];
                         <td><?= htmlspecialchars($r['posisi'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['nip'] ?? '') ?></td>
                         <td>
-                            <a class="btn btn-warning" href="struktur_organisasi_update.php?id=<?= urlencode($r['id_pengelola']) ?>">Ubah</a>
+                            <a class="btn btn-warning" style="margin: 2px;" href="struktur_organisasi_update.php?id=<?= urlencode($r['id_pengelola']) ?>">Ubah</a>
                             <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengelola'] ?>').submit(); }">Hapus</a>
 
                             <form id="deleteForm<?= $r['id_pengelola'] ?>" action="struktur_organisasi_delete.php" method="post" style="display:none;">

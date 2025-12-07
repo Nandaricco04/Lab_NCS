@@ -60,7 +60,7 @@ $rows = pg_fetch_all($res) ?: [];
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a class="btn btn-warning" href="peta_jalan_update.php?id=<?= urlencode($r['id_peta_jalan']) ?>">Ubah</a>
+                                <a class="btn btn-warning" style="margin: 2px;" href="peta_jalan_update.php?id=<?= urlencode($r['id_peta_jalan']) ?>">Ubah</a>
                                 <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peta_jalan'] ?>').submit(); }">Hapus</a>
                                 <form id="deleteForm<?= $r['id_peta_jalan'] ?>" action="peta_jalan_delete.php" method="post" style="display:none;">
                                     <input type="hidden" name="id_peta_jalan" value="<?= htmlspecialchars($r['id_peta_jalan']) ?>">

@@ -51,8 +51,9 @@ $rows = pg_fetch_all($res) ?: [];
                                 <td><?= htmlspecialchars($r['tahun'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
                                 <td>
-                                    <a class="btn btn-warning" href="pengabdian_update.php?id=<?= urlencode($r['id_pengabdian']) ?>">Ubah</a>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="pengabdian_update.php?id=<?= urlencode($r['id_pengabdian']) ?>">Ubah</a>
                                     <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengabdian'] ?>').submit(); }">Hapus</a>
+                                    
                                     <form id="deleteForm<?= $r['id_pengabdian'] ?>" action="pengabdian_delete.php" method="post" style="display:none;">
                                         <input type="hidden" name="id_pengabdian" value="<?= htmlspecialchars($r['id_pengabdian']) ?>">
                                     </form>

@@ -55,7 +55,7 @@ $rows = pg_fetch_all($res) ?: [];
                                     <?php endif; ?>
                                 </td>
                                 <td>
-                                    <a class="btn btn-warning" href="foto_lab_update.php?id=<?= urlencode($r['id_ruang']) ?>">Ubah</a>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="foto_lab_update.php?id=<?= urlencode($r['id_ruang']) ?>">Ubah</a>
                                     <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_ruang'] ?>').submit(); }">Hapus</a>
 
                                     <form id="deleteForm<?= $r['id_ruang'] ?>" action="foto_lab_delete.php" method="post" style="display:none;">

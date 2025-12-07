@@ -60,7 +60,7 @@ $rows = pg_fetch_all($res) ?: [];
                         <td><?= htmlspecialchars($r['judul_detail'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['skema'] ?? '') ?></td>
                         <td>
-                            <a class="btn btn-warning" href="detail_pengabdian_update.php?id=<?= urlencode($r['id_detail_pengabdian']) ?>">Ubah</a>
+                            <a class="btn btn-warning" style="margin: 2px;" href="detail_pengabdian_update.php?id=<?= urlencode($r['id_detail_pengabdian']) ?>">Ubah</a>
                             <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_detail_pengabdian'] ?>').submit(); }">Hapus</a>
                             <form id="deleteForm<?= $r['id_detail_pengabdian'] ?>" action="detail_pengabdian_delete.php" method="post" style="display:none;">
                                 <input type="hidden" name="id_detail_pengabdian" value="<?= htmlspecialchars($r['id_detail_pengabdian']) ?>">

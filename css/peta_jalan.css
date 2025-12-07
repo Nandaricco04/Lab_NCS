@@ -75,6 +75,22 @@
     border-radius: 2px;
 }
 
+/* button */
+.btn-file {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-file:hover {
+    background-color: var(--color-secondary);
+}
+
 /* Timeline */
 .timeline {
     position: relative;
@@ -207,6 +223,46 @@
 .timeline-list li::marker {
     color: var(--color-primary);
     font-weight: bold;
+}
+
+/* Pagination Custom Style */
+.pagination-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.pagination-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid var(--color-primary);
+    background: white;
+    color: var(--color-primary);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: var(--color-primary);
+    color: white;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 500;
 }
 
 /* Responsive Design */

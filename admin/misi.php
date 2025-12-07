@@ -48,7 +48,7 @@ $rows = pg_fetch_all($res) ?: [];
                         <td><?= htmlspecialchars($r['id_misi'] ?? '') ?></td>
                         <td><?= htmlspecialchars($r['isi_misi'] ?? '') ?></td>
                         <td>
-                            <a class="btn btn-warning" href="misi_update.php?id=<?= urlencode($r['id_misi']) ?>">Ubah</a>
+                            <a class="btn btn-warning" style="margin: 2px;" href="misi_update.php?id=<?= urlencode($r['id_misi']) ?>">Ubah</a>
                             <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_misi'] ?>').submit(); }">Hapus</a>
 
                             <form id="deleteForm<?= $r['id_misi'] ?>" action="misi_delete.php" method="post" style="display:none;">

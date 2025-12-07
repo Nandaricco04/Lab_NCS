@@ -417,7 +417,38 @@ input.input100 {
 }
 
 .login100-form-btn:hover {
-  background-color: #333333;
+  background-color: #0B57D0;
+}
+
+.password-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-field .input100 {
+    width: 100%;
+    padding-right: 38px;    /* space for icon */
+    box-sizing: border-box;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.toggle-password i {
+    font-size: 22px;
+    color: #333;
+    opacity: 0.65;
+    transition: color 0.2s;
+}
+.toggle-password:hover i {
+    color: #126FB6;
+    opacity: 1;
 }
 
 

@@ -74,7 +74,7 @@ $rows = pg_fetch_all($res) ?: [];
                             <td><?= htmlspecialchars($r['tanggal_pengembalian'] ?? '') ?></td>
                             <td><?= htmlspecialchars(ucfirst(strtolower($r['status'] ?? ''))) ?></td>
                             <td>
-                                <a class="btn btn-warning" href="peminjaman_update.php?id=<?= urlencode($r['id_peminjaman']) ?>">Ubah</a>
+                                <a class="btn btn-warning" style="margin: 2px;" href="peminjaman_update.php?id=<?= urlencode($r['id_peminjaman']) ?>">Ubah</a>
                                 <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peminjaman'] ?>').submit(); }">Hapus</a>
                                 <form id="deleteForm<?= $r['id_peminjaman'] ?>" action="peminjaman_delete.php" method="post" style="display:none;">
                                     <input type="hidden" name="id_peminjaman" value="<?= htmlspecialchars($r['id_peminjaman']) ?>">

@@ -55,7 +55,7 @@ $rows = pg_fetch_all($res) ?: [];
                                 <td><?= htmlspecialchars($r['nama_lengkap'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($r['dibuat_pada'] ?? '') ?></td>
                                 <td>
-                                    <a class="btn btn-warning" href="user_update.php?id=<?= urlencode($r['id_pengguna']) ?>">Ubah</a>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="user_update.php?id=<?= urlencode($r['id_pengguna']) ?>">Ubah</a>
                                     <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengguna'] ?>').submit(); }">Hapus</a>
 
                                     <form id="deleteForm<?= $r['id_pengguna'] ?>" action="user_delete.php" method="post" style="display:none;">
