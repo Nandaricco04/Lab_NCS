@@ -109,10 +109,11 @@
                         <li><a href="index.php">Home</a></li>
                         <li><a href="visi_misi.php">Visi dan Misi</a></li>
                         <li><a href="struktur_organisasi.php">Struktur Organisasi</a></li>
-                        <li><a href="galeri.php">Galeri</a></li>
-                        <li><a href="produk_layanan.php">Produk Layanan</a></li>
-                        <li><a href="arsip.php">Arsip</a></li>
                         <li><a href="peta_jalan.php">Peta Jalan</a></li>
+                        <li><a href="sarana.php">Layanan</a></li>
+                        <li><a href="galeri.php">Galeri</a></li>
+                        <li><a href="arsip.php">Arsip</a></li>
+                        
                     </ul>
                 </div>
 
