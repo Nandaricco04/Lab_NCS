@@ -13,6 +13,7 @@ $rows = pg_fetch_all($res) ?: [];
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,6 +21,7 @@ $rows = pg_fetch_all($res) ?: [];
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
     <div class="layout">
         <?php include 'sidebar.php'; ?>
@@ -32,7 +34,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Judul</th>
                         <th>Tahun</th>
                         <th>File</th>
@@ -40,38 +42,44 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="5">Belum ada peta jalan.</td>
                         </tr>
-                    <?php else: foreach ($rows as $r): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($r['id_peta_jalan'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
-                            <td><?= date('Y', strtotime($r['tahun'])) ?></td>
-                            <td>
-                                <?php if (!empty($r['file_path'])): ?>
-                                    <?php $filename = basename($r['file_path']); ?>
-                                    <a href="<?= htmlspecialchars($r['file_path']) ?>" target="_blank">
-                                        <?= htmlspecialchars($filename) ?>
-                                    </a>
-                                <?php else: ?>
-                                    -
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <a class="btn btn-warning" style="margin: 2px;" href="peta_jalan_update.php?id=<?= urlencode($r['id_peta_jalan']) ?>">Ubah</a>
-                                <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peta_jalan'] ?>').submit(); }">Hapus</a>
-                                <form id="deleteForm<?= $r['id_peta_jalan'] ?>" action="peta_jalan_delete.php" method="post" style="display:none;">
-                                    <input type="hidden" name="id_peta_jalan" value="<?= htmlspecialchars($r['id_peta_jalan']) ?>">
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach;
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
+                                <td><?= date('Y', strtotime($r['tahun'])) ?></td>
+                                <td>
+                                    <?php if (!empty($r['file_path'])): ?>
+                                        <?php $filename = basename($r['file_path']); ?>
+                                        <a href="<?= htmlspecialchars($r['file_path']) ?>" target="_blank">
+                                            <?= htmlspecialchars($filename) ?>
+                                        </a>
+                                    <?php else: ?>
+                                        -
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="peta_jalan_update.php?id=<?= urlencode($r['id_peta_jalan']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peta_jalan'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_peta_jalan'] ?>" action="peta_jalan_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_peta_jalan" value="<?= htmlspecialchars($r['id_peta_jalan']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        $rownum++;
+                        endforeach;
                     endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

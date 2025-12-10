@@ -34,7 +34,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama</th>
                         <th>NIM</th>
                         <th>Isi Konsultasi</th>
@@ -46,33 +46,39 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="9">Belum ada konsultasi.</td>
                         </tr>
-                    <?php else: foreach ($rows as $r): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($r['id_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['nama_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['nim_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['isi_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['tanggal_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['email_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['no_wa_konsultasi'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['status'] ?? '') ?></td>
-                            <td>
-                                <a class="btn btn-warning" style="margin: 2px;" href="konsultasi_update.php?id=<?= urlencode($r['id_konsultasi']) ?>">Ubah</a>
-                                <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_konsultasi'] ?>').submit(); }">Hapus</a>
-                                <form id="deleteForm<?= $r['id_konsultasi'] ?>" action="konsultasi_delete.php" method="post" style="display:none;">
-                                    <input type="hidden" name="id_konsultasi" value="<?= htmlspecialchars($r['id_konsultasi']) ?>">
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach;
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td><?= htmlspecialchars($r['nama_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['nim_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['isi_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['tanggal_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['email_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['no_wa_konsultasi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['status'] ?? '') ?></td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="konsultasi_update.php?id=<?= urlencode($r['id_konsultasi']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_konsultasi'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_konsultasi'] ?>" action="konsultasi_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_konsultasi" value="<?= htmlspecialchars($r['id_konsultasi']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        $rownum++;
+                        endforeach;
                     endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

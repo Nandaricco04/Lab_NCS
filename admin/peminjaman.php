@@ -41,7 +41,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Nama Alat</th>
                         <th>Nama Peminjam</th>
                         <th>NIM</th>
@@ -55,36 +55,43 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="11">Belum ada peminjaman.</td>
                         </tr>
-                    <?php else: foreach ($rows as $r): ?>
-                        <tr>
-                            <td><?= htmlspecialchars($r['id_peminjaman'] ?? '') ?></td>
-                            <td>
-                                <?= htmlspecialchars($namaAlatMap[$r['id_sarana_prasarana']] ?? $r['id_sarana_prasarana']) ?>
-                            </td>
-                            <td><?= htmlspecialchars($r['nama_peminjam'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['nim_peminjam'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['email_peminjam'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['no_wa_peminjam'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['jumlah_pinjam'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['tanggal_peminjaman'] ?? '') ?></td>
-                            <td><?= htmlspecialchars($r['tanggal_pengembalian'] ?? '') ?></td>
-                            <td><?= htmlspecialchars(ucfirst(strtolower($r['status'] ?? ''))) ?></td>
-                            <td>
-                                <a class="btn btn-warning" style="margin: 2px;" href="peminjaman_update.php?id=<?= urlencode($r['id_peminjaman']) ?>">Ubah</a>
-                                <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peminjaman'] ?>').submit(); }">Hapus</a>
-                                <form id="deleteForm<?= $r['id_peminjaman'] ?>" action="peminjaman_delete.php" method="post" style="display:none;">
-                                    <input type="hidden" name="id_peminjaman" value="<?= htmlspecialchars($r['id_peminjaman']) ?>">
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; endif; ?>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td>
+                                    <?= htmlspecialchars($namaAlatMap[$r['id_sarana_prasarana']] ?? $r['id_sarana_prasarana']) ?>
+                                </td>
+                                <td><?= htmlspecialchars($r['nama_peminjam'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['nim_peminjam'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['email_peminjam'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['no_wa_peminjam'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['jumlah_pinjam'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['tanggal_peminjaman'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['tanggal_pengembalian'] ?? '') ?></td>
+                                <td><?= htmlspecialchars(ucfirst(strtolower($r['status'] ?? ''))) ?></td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="peminjaman_update.php?id=<?= urlencode($r['id_peminjaman']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_peminjaman'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_peminjaman'] ?>" action="peminjaman_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_peminjaman" value="<?= htmlspecialchars($r['id_peminjaman']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                    <?php
+                            $rownum++;
+                        endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

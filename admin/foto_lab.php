@@ -34,19 +34,22 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Foto Lab</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="3">Belum ada foto lab.</td>
                         </tr>
-                        <?php else: foreach ($rows as $r): ?>
+                    <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
                             <tr>
-                                <td><?= htmlspecialchars($r['id_ruang'] ?? '') ?></td>
+                                <td><?= $rownum ?></td>
                                 <td>
                                     <?php if (!empty($r['gambar_path'])): ?>
                                         <img src="<?= htmlspecialchars($r['gambar_path']) ?>" alt="foto" style="max-width:100px;max-height:100px;">
@@ -63,7 +66,9 @@ $rows = pg_fetch_all($res) ?: [];
                                     </form>
                                 </td>
                             </tr>
-                    <?php endforeach;
+                        <?php
+                        $rownum++;
+                        endforeach;
                     endif; ?>
                 </tbody>
             </table>

@@ -14,6 +14,7 @@ $rows = pg_fetch_all($res) ?: [];
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,6 +22,7 @@ $rows = pg_fetch_all($res) ?: [];
     <script src="https://code.iconify.design/2/2.2.1/iconify.min.js" defer></script>
     <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
     <div class="layout">
         <?php include 'sidebar.php'; ?>
@@ -33,34 +35,39 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Isi Visi</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (!$rows): ?>
-                    <tr>
-                        <td colspan="6">Belum ada visi.</td>
-                    </tr>
-                <?php else: foreach ($rows as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['id_visi'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['isi_visi'] ?? '') ?></td>
-                        <td>
-                            <a class="btn btn-warning" style="margin: 2px;" href="visi_update.php?id=<?= urlencode($r['id_visi']) ?>">Ubah</a>
-                            <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_visi'] ?>').submit(); }">Hapus</a>
-
-                            <form id="deleteForm<?= $r['id_visi'] ?>" action="visi_delete.php" method="post" style="display:none;">
-                                <input type="hidden" name="id_visi" value="<?= htmlspecialchars($r['id_visi']) ?>">
-                            </form> 
-                        </td>
-                    </tr>
-                <?php endforeach;
-                endif; ?>
+                    <?php
+                    if (!$rows): ?>
+                        <tr>
+                            <td colspan="6">Belum ada visi.</td>
+                        </tr>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td><?= htmlspecialchars($r['isi_visi'] ?? '') ?></td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="visi_update.php?id=<?= urlencode($r['id_visi']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_visi'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_visi'] ?>" action="visi_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_visi" value="<?= htmlspecialchars($r['id_visi']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                    <?php
+                            $rownum++;
+                        endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

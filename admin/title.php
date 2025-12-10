@@ -23,7 +23,7 @@ $rows = pg_fetch_all($res) ?: [];
 </head>
 
 <body>
-     <div class="layout">
+    <div class="layout">
         <?php include 'sidebar.php'; ?>
 
         <div class="content">
@@ -34,42 +34,47 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Judul</th>
                         <th>Gambar Page</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (!$rows): ?>
-                    <tr>
-                        <td colspan="6">Belum ada title.</td>
-                    </tr>
-                <?php else: foreach ($rows as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['id_title'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
-                        <td>
-                            <?php if (!empty($r['gambar_path'])): ?>
-                                <img src="<?= htmlspecialchars($r['gambar_path']) ?>" alt="Gambar" style="max-width:100px;max-height:100px;">
-                            <?php else: ?>
-                                -
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <a class="btn btn-warning" style="margin: 2px;" href="title_update.php?id=<?= urlencode($r['id_title']) ?>">Ubah</a>
-                            <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_title'] ?>').submit(); }">Hapus</a>
-
-                            <form id="deleteForm<?= $r['id_title'] ?>" action="title_delete.php" method="post" style="display:none;">
-                                <input type="hidden" name="id_title" value="<?= htmlspecialchars($r['id_title']) ?>">
-                            </form> 
-                        </td>
-                    </tr>
-                <?php endforeach;
-                endif; ?>
+                    <?php
+                    if (!$rows): ?>
+                        <tr>
+                            <td colspan="6">Belum ada title.</td>
+                        </tr>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
+                                <td>
+                                    <?php if (!empty($r['gambar_path'])): ?>
+                                        <img src="<?= htmlspecialchars($r['gambar_path']) ?>" alt="Gambar" style="max-width:100px;max-height:100px;">
+                                    <?php else: ?>
+                                        -
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="title_update.php?id=<?= urlencode($r['id_title']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_title'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_title'] ?>" action="title_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_title" value="<?= htmlspecialchars($r['id_title']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        $rownum++;
+                        endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

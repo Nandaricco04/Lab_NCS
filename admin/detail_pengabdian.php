@@ -26,7 +26,7 @@ $rows = pg_fetch_all($res) ?: [];
 </head>
 
 <body>
-     <div class="layout">
+    <div class="layout">
         <?php include 'sidebar.php'; ?>
 
         <div class="content">
@@ -37,7 +37,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID Detail</th>
+                        <th>No</th>
                         <th>Tahun Pengabdian</th>
                         <th>Judul Pengabdian</th>
                         <th>Prodi</th>
@@ -47,31 +47,37 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (!$rows): ?>
-                    <tr>
-                        <td colspan="7">Belum ada data detail pengabdian.</td>
-                    </tr>
-                <?php else: foreach ($rows as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['id_detail_pengabdian'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['tahun_pengabdian'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['judul_pengabdian'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['prodi'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['judul_detail'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['skema'] ?? '') ?></td>
-                        <td>
-                            <a class="btn btn-warning" style="margin: 2px;" href="detail_pengabdian_update.php?id=<?= urlencode($r['id_detail_pengabdian']) ?>">Ubah</a>
-                            <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_detail_pengabdian'] ?>').submit(); }">Hapus</a>
-                            <form id="deleteForm<?= $r['id_detail_pengabdian'] ?>" action="detail_pengabdian_delete.php" method="post" style="display:none;">
-                                <input type="hidden" name="id_detail_pengabdian" value="<?= htmlspecialchars($r['id_detail_pengabdian']) ?>">
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach;
-                endif; ?>
+                    <?php
+                    if (!$rows): ?>
+                        <tr>
+                            <td colspan="7">Belum ada data detail pengabdian.</td>
+                        </tr>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td><?= htmlspecialchars($r['tahun_pengabdian'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['judul_pengabdian'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['prodi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['judul_detail'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['skema'] ?? '') ?></td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="detail_pengabdian_update.php?id=<?= urlencode($r['id_detail_pengabdian']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_detail_pengabdian'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_detail_pengabdian'] ?>" action="detail_pengabdian_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_detail_pengabdian" value="<?= htmlspecialchars($r['id_detail_pengabdian']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                    <?php
+                            $rownum++;
+                        endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

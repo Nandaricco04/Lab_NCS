@@ -34,32 +34,36 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Tahun</th>
                         <th>Judul</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="4">Belum ada pengabdian.</td>
                         </tr>
-                        <?php else: foreach ($rows as $r): ?>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
                             <tr>
-                                <td><?= htmlspecialchars($r['id_pengabdian'] ?? '') ?></td>
+                                <td><?= $rownum ?></td>
                                 <td><?= htmlspecialchars($r['tahun'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
                                 <td>
                                     <a class="btn btn-warning" style="margin: 2px;" href="pengabdian_update.php?id=<?= urlencode($r['id_pengabdian']) ?>">Ubah</a>
                                     <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengabdian'] ?>').submit(); }">Hapus</a>
-                                    
                                     <form id="deleteForm<?= $r['id_pengabdian'] ?>" action="pengabdian_delete.php" method="post" style="display:none;">
                                         <input type="hidden" name="id_pengabdian" value="<?= htmlspecialchars($r['id_pengabdian']) ?>">
                                     </form>
                                 </td>
                             </tr>
-                    <?php endforeach;
+                        <?php
+                        $rownum++;
+                        endforeach;
                     endif; ?>
                 </tbody>
             </table>

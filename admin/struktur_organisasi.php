@@ -23,7 +23,7 @@ $rows = pg_fetch_all($res) ?: [];
 </head>
 
 <body>
-     <div class="layout">
+    <div class="layout">
         <?php include 'sidebar.php'; ?>
 
         <div class="content">
@@ -34,7 +34,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Foto</th>
                         <th>Nama</th>
                         <th>Posisi</th>
@@ -43,37 +43,42 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                <?php if (!$rows): ?>
-                    <tr>
-                        <td colspan="6">Belum ada struktur organisasi.</td>
-                    </tr>
-                <?php else: foreach ($rows as $r): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($r['id_pengelola'] ?? '') ?></td>
-                        <td>
-                            <?php if (!empty($r['foto_path'])): ?>
-                                <img src="<?= htmlspecialchars($r['foto_path']) ?>" alt="foto_path" style="max-width:100px;max-height:100px;">
-                            <?php else: ?>
-                                -
-                            <?php endif; ?>
-                        </td>
-                        <td><?= htmlspecialchars($r['nama'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['posisi'] ?? '') ?></td>
-                        <td><?= htmlspecialchars($r['nip'] ?? '') ?></td>
-                        <td>
-                            <a class="btn btn-warning" style="margin: 2px;" href="struktur_organisasi_update.php?id=<?= urlencode($r['id_pengelola']) ?>">Ubah</a>
-                            <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengelola'] ?>').submit(); }">Hapus</a>
-
-                            <form id="deleteForm<?= $r['id_pengelola'] ?>" action="struktur_organisasi_delete.php" method="post" style="display:none;">
-                                <input type="hidden" name="id_pengelola" value="<?= htmlspecialchars($r['id_pengelola']) ?>">
-                            </form> 
-                        </td>
-                    </tr>
-                <?php endforeach;
-                endif; ?>
+                    <?php
+                    if (!$rows): ?>
+                        <tr>
+                            <td colspan="6">Belum ada struktur organisasi.</td>
+                        </tr>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
+                            <tr>
+                                <td><?= $rownum ?></td>
+                                <td>
+                                    <?php if (!empty($r['foto_path'])): ?>
+                                        <img src="<?= htmlspecialchars($r['foto_path']) ?>" alt="foto_path" style="max-width:100px;max-height:100px;">
+                                    <?php else: ?>
+                                        -
+                                    <?php endif; ?>
+                                </td>
+                                <td><?= htmlspecialchars($r['nama'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['posisi'] ?? '') ?></td>
+                                <td><?= htmlspecialchars($r['nip'] ?? '') ?></td>
+                                <td>
+                                    <a class="btn btn-warning" style="margin: 2px;" href="struktur_organisasi_update.php?id=<?= urlencode($r['id_pengelola']) ?>">Ubah</a>
+                                    <a href="#" class="btn btn-danger" onclick="if(confirm('Hapus data ini?')) { document.getElementById('deleteForm<?= $r['id_pengelola'] ?>').submit(); }">Hapus</a>
+                                    <form id="deleteForm<?= $r['id_pengelola'] ?>" action="struktur_organisasi_delete.php" method="post" style="display:none;">
+                                        <input type="hidden" name="id_pengelola" value="<?= htmlspecialchars($r['id_pengelola']) ?>">
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php
+                        $rownum++;
+                        endforeach;
+                    endif; ?>
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+
 </html>

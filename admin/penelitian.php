@@ -34,7 +34,7 @@ $rows = pg_fetch_all($res) ?: [];
             <table class="styled-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>No</th>
                         <th>Judul</th>
                         <th>Tahun</th>
                         <th>File</th>
@@ -42,13 +42,16 @@ $rows = pg_fetch_all($res) ?: [];
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if (!$rows): ?>
+                    <?php
+                    if (!$rows): ?>
                         <tr>
                             <td colspan="5">Belum ada penelitian.</td>
                         </tr>
-                        <?php else: foreach ($rows as $r): ?>
+                        <?php else:
+                        $rownum = 1;
+                        foreach ($rows as $r): ?>
                             <tr>
-                                <td><?= htmlspecialchars($r['id_penelitian'] ?? '') ?></td>
+                                <td><?= $rownum ?></td>
                                 <td><?= htmlspecialchars($r['judul'] ?? '') ?></td>
                                 <td><?= htmlspecialchars($r['tahun'] ?? '') ?></td>
                                 <td>
@@ -69,7 +72,9 @@ $rows = pg_fetch_all($res) ?: [];
                                     </form>
                                 </td>
                             </tr>
-                    <?php endforeach;
+                        <?php
+                        $rownum++;
+                        endforeach;
                     endif; ?>
                 </tbody>
             </table>
