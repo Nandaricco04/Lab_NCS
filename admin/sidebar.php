@@ -23,6 +23,18 @@ if (!isset($_SESSION['id_pengguna'])) {
     <?php
     $activePage = basename($_SERVER['PHP_SELF']);
     ?>
+    
+    <!-- Hamburger Menu Button -->
+    <button class="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">Lab NCS</div>
         <ul class="menu">
@@ -81,7 +93,7 @@ if (!isset($_SESSION['id_pengguna'])) {
                 <a href="peta_jalan.php" class="menu-link">
                     <span class="iconify" data-icon="mdi:map" data-width="20" data-height="20"></span>
                     <span class="label">Peta Jalan</span>
-            </a>
+                </a>
             </li>
             <li class="<?= $activePage == 'galeri.php' ? 'active' : '' ?>">
                 <a href="galeri.php" class="menu-link">
