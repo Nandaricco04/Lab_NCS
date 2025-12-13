@@ -51,7 +51,7 @@ if (!isset($_SESSION['id_pengguna'])) {
                     <span class="label">Title Page</span>
                 </a>
             </li>
-            <li class="dropdown<?= in_array($activePage, ['sejarah.php', 'visi.php', 'misi.php', 'pengelola_lab.php']) ? ' open' : '' ?>">
+            <li class="dropdown<?= in_array($activePage, ['visi.php', 'misi.php', 'struktur_organisasi.php']) ? ' open' : '' ?>">
                 <div class="dropdown-toggle menu-link" role="button" tabindex="0" aria-expanded="<?= in_array($activePage, ['sejarah.php', 'visi.php', 'misi.php', 'pengelola_lab.php']) ? 'true' : 'false' ?>">
                     <span class="iconify" data-icon="mdi:information" data-width="20" data-height="20"></span>
                     <span class="label">Tentang Kami</span>
@@ -96,8 +96,8 @@ if (!isset($_SESSION['id_pengguna'])) {
                     <span class="label">Foto Lab</span>
                 </a>
             </li>
-            <li class="dropdown<?= in_array($activePage, ['sarana.php', 'alat.php', 'peminjaman.php', 'detail.php']) ? ' open' : '' ?>">
-                <div class="dropdown-toggle menu-link" role="button" tabindex="0" aria-expanded="<?= in_array($activePage, ['sarana.php', 'alat.php', 'peminjaman.php', 'detail.php']) ? 'true' : 'false' ?>">
+            <li class="dropdown<?= in_array($activePage, ['sarana.php', 'peminjaman.php', 'konsultasi.php']) ? ' open' : '' ?>">
+                <div class="dropdown-toggle menu-link" role="button" tabindex="0" aria-expanded="<?= in_array($activePage, ['sarana.php', 'peminjaman.php', 'konsultasi.php']) ? 'true' : 'false' ?>">
                     <span class="iconify" data-icon="mdi:briefcase" data-width="20" data-height="20"></span>
                     <span class="label">Layanan</span>
                     <span class="caret" aria-hidden="true">▾</span>
