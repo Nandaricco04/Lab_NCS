@@ -23,7 +23,7 @@ if (!isset($_SESSION['id_pengguna'])) {
     <?php
     $activePage = basename($_SERVER['PHP_SELF']);
     ?>
-    
+
     <!-- Hamburger Menu Button -->
     <button class="hamburger" aria-label="Toggle menu">
         <span></span>
@@ -163,7 +163,8 @@ if (!isset($_SESSION['id_pengguna'])) {
             </li>
         </ul>
         <a class="logout" href="logout.php">
-            <span class="iconify" data-icon="mdi:logout" data-width="20" data-height="20"></span> Logout
+            <span class="iconify" data-icon="mdi:logout" data-width="20" data-height="20"></span>
+            <span class="label" style="padding-top: 0px;">Logout</span>
         </a>
     </div>
 </body>

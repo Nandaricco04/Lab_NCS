@@ -2,50 +2,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropdownToggle = document.querySelectorAll(".dropdown-toggle");
     const menuLinks = Array.from(document.querySelectorAll(".menu-link"));
     const sidebar = document.querySelector(".sidebar");
+    const hamburger = document.querySelector(".hamburger");
+    const overlay = document.querySelector(".sidebar-overlay");
 
     // Clear active state
     function clearActive() {
         document.querySelectorAll(".menu li.active").forEach(li => li.classList.remove("active"));
     }
 
-    // Check if mobile
-    function isMobile() {
-        return window.innerWidth <= 768;
+    // Close sidebar on mobile
+    function closeSidebar() {
+        if (window.innerWidth <= 768) {
+            sidebar.classList.remove("active");
+            hamburger.classList.remove("active");
+            overlay.classList.remove("active");
+        }
     }
 
-    // Expand sidebar on hover (mobile only)
-    if (sidebar) {
-        sidebar.addEventListener("mouseenter", () => {
-            if (isMobile()) {
-                sidebar.classList.add("expanded");
-            }
+    // Toggle sidebar on mobile
+    if (hamburger) {
+        hamburger.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+            hamburger.classList.toggle("active");
+            overlay.classList.toggle("active");
         });
+    }
 
-        sidebar.addEventListener("mouseleave", () => {
-            if (isMobile()) {
-                // Delay collapse to allow clicking
-                setTimeout(() => {
-                    sidebar.classList.remove("expanded");
-                }, 200);
-            }
-        });
-
-        // Touch support for mobile
-        let touchTimeout;
-        sidebar.addEventListener("touchstart", () => {
-            if (isMobile()) {
-                sidebar.classList.add("expanded");
-                clearTimeout(touchTimeout);
-            }
-        });
-
-        document.addEventListener("touchstart", (e) => {
-            if (isMobile() && !sidebar.contains(e.target)) {
-                touchTimeout = setTimeout(() => {
-                    sidebar.classList.remove("expanded");
-                }, 300);
-            }
-        });
+    // Close sidebar when overlay is clicked
+    if (overlay) {
+        overlay.addEventListener("click", closeSidebar);
     }
 
     // Menu link clicks
@@ -70,30 +55,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
-            // Collapse sidebar on mobile after link click
-            if (isMobile()) {
-                setTimeout(() => {
-                    sidebar.classList.remove("expanded");
-                }, 100);
-            }
+            // Close sidebar on mobile after clicking a link
+            closeSidebar();
         });
     });
 
     // Dropdown toggle
     dropdownToggle.forEach(toggle => {
-        toggle.addEventListener("click", (e) => {
-            e.stopPropagation();
+        toggle.addEventListener("click", () => {
             const li = toggle.closest(".dropdown");
             if (!li) return;
-            
-            // Close other dropdowns
-            document.querySelectorAll(".dropdown.open").forEach(d => {
-                if (d !== li) {
-                    d.classList.remove("open");
-                    d.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
-                }
-            });
-            
             const isOpen = li.classList.toggle("open");
             toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
         });
@@ -113,13 +84,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 d.classList.remove("open");
                 d.querySelector(".dropdown-toggle")?.setAttribute("aria-expanded", "false");
             });
+            
+            // Close sidebar on mobile when clicking outside
+            if (window.innerWidth <= 768 && !e.target.closest(".hamburger")) {
+                closeSidebar();
+            }
         }
     });
 
     // Handle window resize
     window.addEventListener("resize", () => {
-        if (!isMobile()) {
-            sidebar.classList.remove("expanded");
+        if (window.innerWidth > 768) {
+            sidebar.classList.remove("active");
+            hamburger.classList.remove("active");
+            overlay.classList.remove("active");
         }
     });
 });

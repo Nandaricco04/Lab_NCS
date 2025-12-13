@@ -144,20 +144,31 @@
 .logout {
     width: 100%;
     margin-top: 30px;
-    padding: 12px;
+    padding: 15px;
     border: none;
     font-weight: bold;
     border-radius: 8px;
     background: #627d98;
     color: white;
     cursor: pointer;
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
 }
 
 .logout:hover {
     background: #516b85;
     text-decoration: none;
+}
+
+.logout .iconify {
+    flex-shrink: 0;
+}
+
+.logout .label {
+    line-height: 1;
 }
 
 .layout {
@@ -471,23 +482,14 @@
     /* Logout button */
     .logout {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
-        padding: 12px 8px;
-    }
-    
-    .sidebar .logout .label {
-        display: none;
-    }
-    
-    .sidebar.expanded .logout {
-        justify-content: center;
+        gap: 12px;
         padding: 12px;
     }
     
-    .sidebar.expanded .logout .label {
-        display: inline;
-        margin-left: 8px;
+    .logout .iconify {
+        flex-shrink: 0;
     }
     
     /* Content adjustment */
@@ -516,15 +518,7 @@
         padding: 20px 15px;
     }
     
-    /* Table responsive */
-    .styled-table {
-        font-size: 13px;
-    }
-    
-    .styled-table th,
-    .styled-table td {
-        padding: 10px 12px;
-    }
+
 }
 
 @media screen and (max-width: 480px) {
