@@ -13,8 +13,7 @@
     padding: 25px 20px;
     border-right: 1px solid rgba(0,0,0,0.15);
     color: #fff;
-    transition: width 0.3s ease;
-    overflow-x: hidden;
+    transition: all 0.3s ease;
     z-index: 1000;
 }
 
@@ -45,7 +44,7 @@
     text-decoration: none;
     cursor: pointer;
     transition: background 180ms ease, color 180ms ease;
-    white-space: nowrap;
+    position: relative;
 }
 
 .menu-link.active,
@@ -62,8 +61,8 @@
 }
 
 .iconify {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     display: inline-block;
     flex-shrink: 0;
 }
@@ -154,8 +153,6 @@
     cursor: pointer;
     display: inline-block;
     text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
 .logout:hover {
@@ -386,138 +383,164 @@
     margin-top: 5px;
 }
 
+.layout {
+    display: flex;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
 /* ===== RESPONSIVE MOBILE ===== */
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
+    /* Sidebar jadi icon only di mobile */
     .sidebar {
         width: 70px;
         padding: 20px 10px;
+        overflow: visible;
     }
-
-    .sidebar:hover {
+    
+    .sidebar.expanded {
         width: 240px;
         padding: 25px 20px;
     }
-
-    .logo {
+    
+    /* Hide label by default */
+    .sidebar .label {
+        display: none;
+        opacity: 0;
+    }
+    
+    .sidebar.expanded .label {
+        display: inline;
+        opacity: 1;
+    }
+    
+    /* Logo */
+    .sidebar .logo {
         font-size: 16px;
         text-align: center;
     }
-
-    .sidebar:not(:hover) .logo {
-        font-size: 0;
+    
+    .sidebar.expanded .logo {
+        text-align: left;
     }
-
-    .sidebar:not(:hover) .logo::before {
-        content: "L";
-        font-size: 20px;
-    }
-
-    .sidebar:not(:hover) .label {
-        display: none;
-    }
-
-    .sidebar:not(:hover) .caret {
-        display: none;
-    }
-
-    .sidebar:not(:hover) .logout {
-        width: 50px;
-        padding: 12px 0;
-        font-size: 0;
-        display: flex;
-        align-items: center;
+    
+    /* Menu link adjustment */
+    .menu-link {
         justify-content: center;
+        padding: 12px 8px;
     }
-
-    .sidebar:not(:hover) .logout .iconify {
-        margin: 0;
+    
+    .sidebar.expanded .menu-link {
+        justify-content: flex-start;
+        padding: 12px;
     }
-
-    .sidebar:not(:hover) .menu-link {
+    
+    /* Hide caret by default */
+    .dropdown .caret {
+        display: none;
+    }
+    
+    .sidebar.expanded .dropdown .caret {
+        display: inline;
+    }
+    
+    /* Dropdown positioning for collapsed sidebar */
+    .sidebar:not(.expanded) .dropdown {
+        position: relative;
+    }
+    
+    .sidebar:not(.expanded) .dropdown .dropdown-menu {
+        position: absolute;
+        left: 70px;
+        top: 0;
+        background: linear-gradient(180deg, #126FB6 0%, #0B5085 100%);
+        padding: 10px;
+        border-radius: 8px;
+        min-width: 200px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        z-index: 1001;
+    }
+    
+    .sidebar:not(.expanded) .dropdown .dropdown-menu li {
+        margin-bottom: 5px;
+    }
+    
+    /* Logout button */
+    .logout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 8px;
+    }
+    
+    .sidebar .logout .label {
+        display: none;
+    }
+    
+    .sidebar.expanded .logout {
         justify-content: center;
         padding: 12px;
     }
-
-    .sidebar:not(:hover) .dropdown-menu {
-        display: none !important;
+    
+    .sidebar.expanded .logout .label {
+        display: inline;
+        margin-left: 8px;
     }
-
+    
+    /* Content adjustment */
     .content {
         margin-left: 70px;
         padding: 20px 15px 0 15px;
     }
-
+    
+    .sidebar.expanded ~ .content {
+        margin-left: 70px;
+    }
+    
+    /* Dashboard cards responsive */
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
     .main-table-title {
         font-size: 24px;
     }
-
+    
+    /* Form responsive */
+    .form-user-box {
+        width: 100%;
+        padding: 20px 15px;
+    }
+    
+    /* Table responsive */
     .styled-table {
         font-size: 13px;
     }
-
+    
     .styled-table th,
     .styled-table td {
         padding: 10px 12px;
     }
-
-    .form-user-box {
-        width: 100%;
-        padding: 20px 16px;
-    }
-
-    .dashboard-cards {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-
-    .form-btn-bar {
-        flex-direction: column;
-    }
-
-    .btn-user-primary,
-    .btn-user-warning {
-        justify-content: center;
-    }
 }
 
-@media (max-width: 480px) {
-    .sidebar {
-        width: 60px;
-        padding: 15px 5px;
-    }
-
-    .sidebar:hover {
-        width: 220px;
-        padding: 20px 15px;
-    }
-
-    .content {
-        margin-left: 60px;
-        padding: 15px 10px 0 10px;
-    }
-
-    .main-table-title {
-        font-size: 20px;
-    }
-
-    .styled-table {
-        font-size: 12px;
-    }
-
-    .styled-table th,
-    .styled-table td {
-        padding: 8px 10px;
-    }
-
+@media screen and (max-width: 480px) {
     .dashboard-card {
         padding: 20px 22px;
     }
-
+    
     .card-title {
         font-size: 14px;
     }
-
+    
     .card-value {
         font-size: 32px;
+    }
+    
+    .main-table-title {
+        font-size: 20px;
     }
 }
