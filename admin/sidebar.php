@@ -23,17 +23,6 @@ if (!isset($_SESSION['id_pengguna'])) {
     <?php
     $activePage = basename($_SERVER['PHP_SELF']);
     ?>
-
-    <!-- Hamburger Menu Button -->
-    <button class="hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
-
-    <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay"></div>
-
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="logo">Lab NCS</div>
